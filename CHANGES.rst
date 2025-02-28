@@ -219,7 +219,7 @@ Misc
 - [breaking] mysql_exec ini option replaced with mysql_mysqld_safe
 - [breaking] --mysql-exec cmd option replaced with --mysql-mysqld-safe
 - [breaking] replaced mysql_init ini option with mysql_install_db
-- [breaking] replaced --mysql-init cmd option with --mysql-install-db 
+- [breaking] replaced --mysql-init cmd option with --mysql-install-db
 - [breaking] added mysql_mysqld option and --mysql-mysqld cmd option
 
 1.1.1

@@ -12,12 +12,10 @@ pymysql = "==1.1.1"
 
 [dev-packages]
 towncrier = "==24.8.0"
-black = "==25.1.0"
 pytest-cov = "==6.0.0"
 pytest-xdist = "==3.6.1"
 mock = "==5.1.0"
 coverage = "==7.6.12"
 tbump = "==6.11.0"
 mypy = "==1.15.0"
-ruff = "==0.9.8"
 types-pymysql = "==1.1.0.20241103"

@@ -1,7 +1,7 @@
 .. image:: https://raw.githubusercontent.com/dbfixtures/pytest-mysql/master/logo.png
     :width: 100px
     :height: 100px
-    
+
 pytest-mysql
 ============
 
