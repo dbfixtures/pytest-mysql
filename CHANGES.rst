@@ -21,7 +21,7 @@ Features
 Miscellaneus
 ------------
 
-- `#550 <https://github.com/ClearcodeHQ/pytest-mysql/issues/550>`_
+- `#550 <https://github.com/dbfixtures/pytest-mysql/issues/550>`_
 - Fixed last piece of macosx environment setup after moving to pymysql
 - Readme fix
 - Update MySQL versions in CI
@@ -37,13 +37,13 @@ Breaking changes
 
   Installation of mysqlclient became more and more problematic on macosx which in turn proved to be hard to maintain on github-actions.
 
-  PyMySQL is mostly API compatible so pytest-mysql usage is just changing import location with one exception for poorly documented client fixture closeup. (`#491 <https://github.com/ClearcodeHQ/pytest-mysql/issues/491>`_)
+  PyMySQL is mostly API compatible so pytest-mysql usage is just changing import location with one exception for poorly documented client fixture closeup. (`#491 <https://github.com/dbfixtures/pytest-mysql/issues/491>`_)
 
 
 Miscellaneus
 ------------
 
-- `#481 <https://github.com/ClearcodeHQ/pytest-mysql/issues/481>`_, `#527 <https://github.com/ClearcodeHQ/pytest-mysql/issues/527>`_, `#530 <https://github.com/ClearcodeHQ/pytest-mysql/issues/530>`_
+- `#481 <https://github.com/dbfixtures/pytest-mysql/issues/481>`_, `#527 <https://github.com/dbfixtures/pytest-mysql/issues/527>`_, `#530 <https://github.com/dbfixtures/pytest-mysql/issues/530>`_
 
 
 2.5.0 (2023-10-30)
@@ -52,14 +52,14 @@ Miscellaneus
 Features
 --------
 
-- Add missing user param (`#474 <https://github.com/ClearcodeHQ/pytest-mysql/issues/474>`_)
-- Add support for Python 3.12 (`#480 <https://github.com/ClearcodeHQ/pytest-mysql/issues/480>`_)
+- Add missing user param (`#474 <https://github.com/dbfixtures/pytest-mysql/issues/474>`_)
+- Add support for Python 3.12 (`#480 <https://github.com/dbfixtures/pytest-mysql/issues/480>`_)
 
 
 Miscellaneus
 ------------
 
-- `#450 <https://github.com/ClearcodeHQ/pytest-mysql/issues/450>`_, `#454 <https://github.com/ClearcodeHQ/pytest-mysql/issues/454>`_, `#460 <https://github.com/ClearcodeHQ/pytest-mysql/issues/460>`_, `#473 <https://github.com/ClearcodeHQ/pytest-mysql/issues/473>`_, `#478 <https://github.com/ClearcodeHQ/pytest-mysql/issues/478>`_, `#479 <https://github.com/ClearcodeHQ/pytest-mysql/issues/479>`_, `#480 <https://github.com/ClearcodeHQ/pytest-mysql/issues/480>`_
+- `#450 <https://github.com/dbfixtures/pytest-mysql/issues/450>`_, `#454 <https://github.com/dbfixtures/pytest-mysql/issues/454>`_, `#460 <https://github.com/dbfixtures/pytest-mysql/issues/460>`_, `#473 <https://github.com/dbfixtures/pytest-mysql/issues/473>`_, `#478 <https://github.com/dbfixtures/pytest-mysql/issues/478>`_, `#479 <https://github.com/dbfixtures/pytest-mysql/issues/479>`_, `#480 <https://github.com/dbfixtures/pytest-mysql/issues/480>`_
 
 
 2.4.2 (2023-03-27)
@@ -68,7 +68,7 @@ Miscellaneus
 Bugfixes
 --------
 
-- Fix license configuration in pyproject.toml (`#426 <https://github.com/ClearcodeHQ/pytest-mysql/issues/426>`_)
+- Fix license configuration in pyproject.toml (`#426 <https://github.com/dbfixtures/pytest-mysql/issues/426>`_)
 
 
 2.4.1 (2023-03-13)
@@ -77,7 +77,7 @@ Bugfixes
 Bugfixes
 --------
 
-- Fix packaging mistake which did not included the subpackages. (`#417 <https://github.com/ClearcodeHQ/pytest-mysql/issues/417>`_)
+- Fix packaging mistake which did not included the subpackages. (`#417 <https://github.com/dbfixtures/pytest-mysql/issues/417>`_)
 
 
 2.4.0 (2023-03-10)
@@ -86,7 +86,7 @@ Bugfixes
 Breaking changes
 ----------------
 
-- Dropped support for Python 3.7 (`#401 <https://github.com/ClearcodeHQ/pytest-mysql/issues/401>`_)
+- Dropped support for Python 3.7 (`#401 <https://github.com/dbfixtures/pytest-mysql/issues/401>`_)
 
 
 Bugfixes
@@ -97,32 +97,32 @@ Bugfixes
   OSX gives out super long temp directories.  This isn't a problem until
   we run into an odd 103-character limit on the names of unix sockets
   `see this stackoverflow thread <https://unix.stackexchange.com/questions/367008/why-is-socket-path-length-limited-to-a-hundred-chars/367012#367012>`_.
-  Here we warn and give the user a way out of it. (`#345 <https://github.com/ClearcodeHQ/pytest-mysql/issues/345>`_)
+  Here we warn and give the user a way out of it. (`#345 <https://github.com/dbfixtures/pytest-mysql/issues/345>`_)
 
 
 Features
 --------
 
-- Added support to Python 3.11 (`#392 <https://github.com/ClearcodeHQ/pytest-mysql/issues/392>`_)
-- Add type hints and mypy checks (`#401 <https://github.com/ClearcodeHQ/pytest-mysql/issues/401>`_)
+- Added support to Python 3.11 (`#392 <https://github.com/dbfixtures/pytest-mysql/issues/392>`_)
+- Add type hints and mypy checks (`#401 <https://github.com/dbfixtures/pytest-mysql/issues/401>`_)
 
 
 Miscellaneus
 ------------
 
-- Run tests on CI on macosx (`#245 <https://github.com/ClearcodeHQ/pytest-mysql/issues/245>`_)
-- Update example configuration in README (`#365 <https://github.com/ClearcodeHQ/pytest-mysql/issues/365>`_)
-- Readme fixes (`#372 <https://github.com/ClearcodeHQ/pytest-mysql/issues/372>`_)
-- Docstring fixes (`#378 <https://github.com/ClearcodeHQ/pytest-mysql/issues/378>`_)
-- Added towncrier to manage newsfragments (`#397 <https://github.com/ClearcodeHQ/pytest-mysql/issues/397>`_)
-- Migrate dependency management to pipenv (`#398 <https://github.com/ClearcodeHQ/pytest-mysql/issues/398>`_)
-- Move most of the package definition to pyproject.toml (`#399 <https://github.com/ClearcodeHQ/pytest-mysql/issues/399>`_)
-- Migrate automerge to a shared workflow using github app for short-lived tokens. (`#400 <https://github.com/ClearcodeHQ/pytest-mysql/issues/400>`_)
-- Use tbump to manage versioning (`#402 <https://github.com/ClearcodeHQ/pytest-mysql/issues/402>`_)
+- Run tests on CI on macosx (`#245 <https://github.com/dbfixtures/pytest-mysql/issues/245>`_)
+- Update example configuration in README (`#365 <https://github.com/dbfixtures/pytest-mysql/issues/365>`_)
+- Readme fixes (`#372 <https://github.com/dbfixtures/pytest-mysql/issues/372>`_)
+- Docstring fixes (`#378 <https://github.com/dbfixtures/pytest-mysql/issues/378>`_)
+- Added towncrier to manage newsfragments (`#397 <https://github.com/dbfixtures/pytest-mysql/issues/397>`_)
+- Migrate dependency management to pipenv (`#398 <https://github.com/dbfixtures/pytest-mysql/issues/398>`_)
+- Move most of the package definition to pyproject.toml (`#399 <https://github.com/dbfixtures/pytest-mysql/issues/399>`_)
+- Migrate automerge to a shared workflow using github app for short-lived tokens. (`#400 <https://github.com/dbfixtures/pytest-mysql/issues/400>`_)
+- Use tbump to manage versioning (`#402 <https://github.com/dbfixtures/pytest-mysql/issues/402>`_)
 - Updated codecov configuration:
   * Added token
-  * Turned off pipeline failing if codecov upload fails (`#405 <https://github.com/ClearcodeHQ/pytest-mysql/issues/405>`_)
-- Run mariadb tests after MySQL tests run. (`#409 <https://github.com/ClearcodeHQ/pytest-mysql/issues/409>`_)
+  * Turned off pipeline failing if codecov upload fails (`#405 <https://github.com/dbfixtures/pytest-mysql/issues/405>`_)
+- Run mariadb tests after MySQL tests run. (`#409 <https://github.com/dbfixtures/pytest-mysql/issues/409>`_)
 
 
 2.3.1

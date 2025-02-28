@@ -1,4 +1,4 @@
-.. image:: https://raw.githubusercontent.com/ClearcodeHQ/pytest-mysql/master/logo.png
+.. image:: https://raw.githubusercontent.com/dbfixtures/pytest-mysql/master/logo.png
     :width: 100px
     :height: 100px
     
@@ -288,12 +288,12 @@ MySQL (and MariaDB as well) will not allow it.
 
     USER nobody
 
-This line should switch your docker process to run on user nobody. See `this comment for example <https://github.com/ClearcodeHQ/pytest-mysql/issues/62#issuecomment-367975723>`_
+This line should switch your docker process to run on user nobody. See `this comment for example <https://github.com/dbfixtures/pytest-mysql/issues/62#issuecomment-367975723>`_
 
 Package resources
 -----------------
 
-* Bug tracker: https://github.com/ClearcodeHQ/pytest-mysql/issues
+* Bug tracker: https://github.com/dbfixtures/pytest-mysql/issues
 
 Release
 =======
