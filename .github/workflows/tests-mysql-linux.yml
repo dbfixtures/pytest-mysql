@@ -49,17 +49,17 @@ jobs:
       - name: Check MySQL Version
         run: mysqld --version
       - name: Run test
-        uses: fizyk/actions-reuse/.github/actions/pipenv@v3.1.0
+        uses: fizyk/actions-reuse/.github/actions/pipenv@v3.1.1
         with:
           python-version: ${{ matrix.python-version }}
           command: pytest --mysql-user=$USER -n 0 -k "not mysqlnoproc" --cov-report=xml
       - name: Run xdist test
-        uses: fizyk/actions-reuse/.github/actions/pipenv@v3.1.0
+        uses: fizyk/actions-reuse/.github/actions/pipenv@v3.1.1
         with:
           python-version: ${{ matrix.python-version }}
           command: pytest --mysql-user=$USER -n 1 -k "not mysqlnoproc" --cov-report=xml:coverage-xdist.xml
       - name: Run noproc test
-        uses: fizyk/actions-reuse/.github/actions/pipenv@v3.1.0
+        uses: fizyk/actions-reuse/.github/actions/pipenv@v3.1.1
         with:
           python-version: ${{ matrix.python-version }}
           command: pytest -n 0 -k mysqlnoproc --cov-report=xml:coverage-noproc.xml --mysql-host="127.0.0.1" --mysql-port=3333
