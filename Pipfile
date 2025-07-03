@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 pytest = "==8.4.1"
 port-for = "==0.7.4"
-mirakuru = "==2.6.0"
+mirakuru = "==2.6.1"
 packaging = "==25.0"
 pymysql = "==1.1.1"
 
