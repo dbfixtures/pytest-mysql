@@ -281,8 +281,9 @@ And run tests:
 Running on Docker/as root
 =========================
 
-Unfortunately, running MySQL as root (thus by default on docker) is not possible.
-MySQL (and MariaDB as well) will not allow it.
+MySQL and MariaDB refuse to run as root by default, but we can force them by setting user=root in the configuration file.
+
+However most common and secure approach is to change user which runs tests on Docker:
 
 .. code-block::
 
