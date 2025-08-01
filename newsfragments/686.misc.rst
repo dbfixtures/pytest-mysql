@@ -1,0 +1,1 @@
+Update Docker/root related part of README
