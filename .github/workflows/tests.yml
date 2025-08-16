@@ -45,7 +45,7 @@ jobs:
       OS: macos-latest
       PYTHON: ${{ matrix.python-version }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - uses: ankane/setup-mysql@v1
       with:
         mysql-version: 8.4
@@ -69,7 +69,7 @@ jobs:
       OS: macos-latest
       PYTHON: ${{ matrix.python-version }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - uses: ankane/setup-mariadb@v1
       with:
         mariadb-version: "11.4"
