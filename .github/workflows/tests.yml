@@ -52,7 +52,7 @@ jobs:
     - name: Check MySQL Version
       run: mysqld --version
     - name: Run test
-      uses: fizyk/actions-reuse/.github/actions/pipenv@v3.1.1
+      uses: fizyk/actions-reuse/.github/actions/pipenv@v4.0.1
       with:
         python-version: ${{ matrix.python-version }}
         command: pytest -n 0 -k "not mysqlnoproc" --cov-report=xml --mysql-user=root --basetemp=/tmp/pytest_mysql
@@ -76,7 +76,7 @@ jobs:
     - name: Check MySQL Version
       run: mysqld --version
     - name: Run test
-      uses: fizyk/actions-reuse/.github/actions/pipenv@v3.1.1
+      uses: fizyk/actions-reuse/.github/actions/pipenv@v4.0.1
       with:
         python-version: ${{ matrix.python-version }}
         command: pytest --mysql-user=$USER -n 0 -k "not mysqlnoproc" --cov-report=xml --basetemp=/tmp/pytest_mysql
