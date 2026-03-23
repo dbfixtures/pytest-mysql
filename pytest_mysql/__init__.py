@@ -17,4 +17,5 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with pytest-mysql. If not, see <http://www.gnu.org/licenses/>.
 """Main module for pytest-mysql."""
+
 __version__ = "3.1.0"

@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with pytest-mysql.  If not, see <http://www.gnu.org/licenses/>.
 """Client fixture factory for MySQL database."""
+
 from typing import Any, Callable, Dict, Generator, Optional, Union
 
 import pytest
