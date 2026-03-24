@@ -15,7 +15,7 @@ from pytest_mysql.executor import MySQLExecutor
     (
         (b"mysql_install_db Ver 5.7.21, for Linux on x86_64", "5.7.21"),
         (
-            (b"mysqld  Ver 5.7.21-0ubuntu0.17.10.1 " b"for Linux on x86_64 ((Ubuntu))"),
+            (b"mysqld  Ver 5.7.21-0ubuntu0.17.10.1 for Linux on x86_64 ((Ubuntu))"),
             "5.7.21",
         ),
         (b"mysql 5.5.55", "5.5.55"),
@@ -27,7 +27,7 @@ from pytest_mysql.executor import MySQLExecutor
             "10.1.30",
         ),
         (
-            (b"mysqld  Ver 8.0.12 for macos10.13 on x86_64 " b"(MySQL Community Server - GPL)"),
+            (b"mysqld  Ver 8.0.12 for macos10.13 on x86_64 (MySQL Community Server - GPL)"),
             "8.0.12",
         ),
         ((b"mysqld  Ver 5.7.23 for osx10.13 on x86_64 (Homebrew)"), "5.7.23"),
@@ -57,7 +57,7 @@ def test_version_check(verstr: bytes, version: str, tmp_path_factory: TempPathFa
     (
         (b"mysql_install_db Ver 5.7.21, for Linux on x86_64", "mysql"),
         (
-            (b"mysqld  Ver 5.7.21-0ubuntu0.17.10.1 " b"for Linux on x86_64 ((Ubuntu))"),
+            (b"mysqld  Ver 5.7.21-0ubuntu0.17.10.1 for Linux on x86_64 ((Ubuntu))"),
             "mysql",
         ),
         (b"mysql 5.5.55", "mysql"),
@@ -70,12 +70,12 @@ def test_version_check(verstr: bytes, version: str, tmp_path_factory: TempPathFa
         ),
         (b"mysql 8.0.12", "mysql"),
         (
-            (b"Ver 8.0.12" b" for macos10.13 on x86_64 (MySQL Community Server - GPL)"),
+            (b"Ver 8.0.12 for macos10.13 on x86_64 (MySQL Community Server - GPL)"),
             "mysql",
         ),
         (b"mysql 5.7.23", "mysql"),
         (
-            (b"mysqld  Ver 5.7.23 " b"for osx10.13 on x86_64 (Homebrew)"),
+            (b"mysqld  Ver 5.7.23 for osx10.13 on x86_64 (Homebrew)"),
             "mysql",
         ),
     ),

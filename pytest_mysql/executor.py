@@ -153,15 +153,13 @@ class MySQLExecutor(TCPExecutor):
     def shutdown(self) -> None:
         """Send shutdown command to the server."""
         shutdown_command = (
-            f"{self.admin_exec} --socket={self.unixsocket} " f"--user={self.user} shutdown"
+            f"{self.admin_exec} --socket={self.unixsocket} --user={self.user} shutdown"
         )
         try:
             subprocess.check_output(shutdown_command, shell=True)
         except subprocess.CalledProcessError:
             # Fallback to using root user for shutdown
-            shutdown_command = (
-                f"{self.admin_exec} --socket={self.unixsocket} " f"--user=root shutdown"
-            )
+            shutdown_command = f"{self.admin_exec} --socket={self.unixsocket} --user=root shutdown"
             subprocess.check_output(shutdown_command, shell=True)
 
     def stop(self, *args: Any, **kwargs: Any) -> "MySQLExecutor":

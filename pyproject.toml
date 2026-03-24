@@ -62,13 +62,11 @@ addopts = "--max-worker-restart=0 --showlocals --verbose --cov"
 testpaths = "tests"
 mysql_dbname = "pytestmysql"
 
-[tool.black]
-line-length = 100
-target-version = ['py39']
-include = '.*\.pyi?$'
-
 [tool.ruff]
 line-length = 100
+target-version = 'py39'
+
+[tool.ruff.lint]
 select = [
     "E",   # pycodestyle
     "F",   # pyflakes
