@@ -58,7 +58,7 @@ namespaces = false
 
 [tool.pytest.ini_options]
 xfail_strict=true
-addopts = "--max-worker-restart=0 --showlocals --verbose --cov"
+addopts = "--max-worker-restart=0 --showlocals --verbose"
 testpaths = "tests"
 mysql_dbname = "pytestmysql"
 

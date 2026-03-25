@@ -1,4 +1,7 @@
 [run]
+concurrency = multiprocessing
+parallel = true
+patch = subprocess
 include =
-    pytest_mysql/*
-    tests/*
+    */pytest_mysql/*
+    */tests/*
