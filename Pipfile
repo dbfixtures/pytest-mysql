@@ -7,7 +7,7 @@ name = "pypi"
 pytest = "==8.4.2"
 port-for = "==0.7.4"
 mirakuru = "==3.0.2"
-packaging = "==25.0"
+packaging = "==26.0"
 pymysql = "==1.1.2"
 pytest-mysql = {path = ".", editable = true}
 
