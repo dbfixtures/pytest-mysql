@@ -18,11 +18,11 @@
 """Process fixture factory for MySQL database."""
 
 from pathlib import Path
-from typing import Callable, Generator, List, Optional, Set, Tuple, Union
+from typing import Callable, Generator
 from warnings import warn
 
 import pytest
-from port_for import get_port
+from port_for import PortType, get_port
 from pytest import FixtureRequest, TempPathFactory
 
 from pytest_mysql.config import get_config
@@ -30,27 +30,15 @@ from pytest_mysql.executor import MySQLExecutor
 
 
 def mysql_proc(
-    mysqld_exec: Optional[Path] = None,
-    admin_executable: Optional[str] = None,
-    mysqld_safe: Optional[Path] = None,
-    host: Optional[str] = None,
-    user: Optional[str] = None,
-    port: Union[
-        None,
-        str,
-        int,
-        Tuple[int, int],
-        Set[int],
-        List[str],
-        List[int],
-        List[Tuple[int, int]],
-        List[Set[int]],
-        List[Union[Set[int], Tuple[int, int]]],
-        List[Union[str, int, Tuple[int, int], Set[int]]],
-    ] = -1,
-    params: Optional[str] = None,
+    mysqld_exec: Path | None = None,
+    admin_executable: str | None = None,
+    mysqld_safe: Path | None = None,
+    host: str | None = None,
+    user: str | None = None,
+    port: PortType | None = -1,
+    params: str | None = None,
     logs_prefix: str = "",
-    install_db: Optional[str] = None,
+    install_db: str | None = None,
 ) -> Callable[[FixtureRequest, TempPathFactory], Generator[MySQLExecutor, None, None]]:
     """Process fixture factory for MySQL server.
 

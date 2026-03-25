@@ -11,28 +11,28 @@ jobs:
     uses: ./.github/workflows/tests-mysql-linux.yml
     with:
       mysql: "8.4"
-      python-versions: '["3.9", "3.10", "3.11", "3.12", "3.13", "pypy-3.10"]'
+      python-versions: '["3.10", "3.11", "3.12", "3.13", "3.14", "pypy-3.11"]'
 
   tests-mysql-linux_8:
     needs: [ tests-mysql-linux ]
     uses: ./.github/workflows/tests-mysql-linux.yml
     with:
       mysql: "8.0"
-      python-versions: '["3.11", "3.12", "3.13"]'
+      python-versions: '["3.12", "3.13", "3.14"]'
 
   tests-mariadb-linux-11:
     needs: [ tests-mysql-linux ]
     uses: ./.github/workflows/tests-mariadb-linux.yml
     with:
       mariadb: "11.4"
-      python-versions: '["3.11", "3.12", "3.13"]'
+      python-versions: '["3.12", "3.13", "3.14"]'
 
   tests-mariadb-linux-10_11:
     needs: [ tests-mariadb-linux-11 ]
     uses: ./.github/workflows/tests-mariadb-linux.yml
     with:
       mariadb: 10.11
-      python-versions: '["3.12", "3.13"]'
+      python-versions: '["3.13", "3.14"]'
 
   tests-mysql-macosx:
     runs-on: macos-latest
@@ -40,7 +40,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.11", "3.12", "3.13"]
+        python-version: ["3.12", "3.13", "3.14"]
     env:
       OS: macos-latest
       PYTHON: ${{ matrix.python-version }}
@@ -65,7 +65,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.13"]
+        python-version: ["3.14"]
     env:
       OS: macos-latest
       PYTHON: ${{ matrix.python-version }}
