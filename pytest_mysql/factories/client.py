@@ -17,7 +17,7 @@
 # along with pytest-mysql.  If not, see <http://www.gnu.org/licenses/>.
 """Client fixture factory for MySQL database."""
 
-from typing import Any, Callable, Dict, Generator, Optional, Union
+from typing import Any, Callable, Generator
 
 import pytest
 from _pytest.fixtures import FixtureRequest
@@ -31,8 +31,8 @@ from pytest_mysql.executor_noop import NoopMySQLExecutor
 
 def mysql(
     process_fixture_name: str,
-    passwd: Optional[str] = None,
-    dbname: Optional[str] = None,
+    passwd: str | None = None,
+    dbname: str | None = None,
     charset: str = "utf8",
     collation: str = "utf8_general_ci",
 ) -> Callable[[FixtureRequest], Any]:
@@ -57,7 +57,7 @@ def mysql(
     :rtype: func
     """
 
-    def _connect(connect_kwargs: Dict[str, Any], query_str: str, mysql_db: str) -> Connection:
+    def _connect(connect_kwargs: dict[str, Any], query_str: str, mysql_db: str) -> Connection:
         """Apply given query to a  given MySQLdb connection."""
         mysql_conn = Connection(**connect_kwargs)
         try:
@@ -92,9 +92,7 @@ def mysql(
         :returns: connection to database
         """
         config = get_config(request)
-        process: Union[NoopMySQLExecutor, MySQLExecutor] = request.getfixturevalue(
-            process_fixture_name
-        )
+        process: NoopMySQLExecutor | MySQLExecutor = request.getfixturevalue(process_fixture_name)
         if not process.running():
             process.start()
 
@@ -102,7 +100,7 @@ def mysql(
         mysql_passwd = passwd or config["passwd"]
         mysql_db = dbname or config["dbname"]
 
-        connection_kwargs: Dict[str, Any] = {
+        connection_kwargs: dict[str, Any] = {
             "host": process.host,
             "user": mysql_user,
             "passwd": mysql_passwd,

@@ -4,7 +4,7 @@ import platform
 import re
 import subprocess
 from pathlib import Path
-from typing import Any, Literal, Optional, Union
+from typing import Any, Literal
 
 from mirakuru import TCPExecutor
 from packaging.version import parse
@@ -34,7 +34,7 @@ class MySQLExecutor(TCPExecutor):
         host: str,
         port: int,
         timeout: int = 60,
-        install_db: Optional[str] = None,
+        install_db: str | None = None,
     ) -> None:
         """Specialised Executor to run and manage MySQL server process.
 
@@ -84,7 +84,7 @@ class MySQLExecutor(TCPExecutor):
             raise VersionNotDetected(version_output)
         return matches.groupdict()["version"]
 
-    def implementation(self) -> Union[Literal["mariadb"], Literal["mysql"]]:
+    def implementation(self) -> Literal["mariadb", "mysql"]:
         """Detect MySQL Implementation."""
         version_output = subprocess.check_output([self.mysqld, "--version"]).decode("utf-8")
         if self.IMPLEMENTATION_RE.search(version_output):
