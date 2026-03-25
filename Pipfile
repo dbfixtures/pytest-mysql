@@ -9,10 +9,10 @@ port-for = "==0.7.4"
 mirakuru = "==3.0.2"
 packaging = "==25.0"
 pymysql = "==1.1.2"
+pytest-mysql = {path = ".", editable = true}
 
 [dev-packages]
 towncrier = "==25.8.0"
-pytest-cov = "==7.1.0"
 pytest-xdist = "==3.8.0"
 mock = "==5.2.0"
 coverage = "==7.10.7"

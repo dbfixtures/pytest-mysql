@@ -12,6 +12,8 @@ jobs:
     with:
       mysql: "8.4"
       python-versions: '["3.10", "3.11", "3.12", "3.13", "3.14", "pypy-3.11"]'
+    secrets:
+      codecov_token: ${{ secrets.CODECOV_TOKEN }}
 
   tests-mysql-linux_8:
     needs: [ tests-mysql-linux ]
@@ -19,6 +21,8 @@ jobs:
     with:
       mysql: "8.0"
       python-versions: '["3.12", "3.13", "3.14"]'
+    secrets:
+      codecov_token: ${{ secrets.CODECOV_TOKEN }}
 
   tests-mariadb-linux-11:
     needs: [ tests-mysql-linux ]
@@ -26,6 +30,8 @@ jobs:
     with:
       mariadb: "11.4"
       python-versions: '["3.12", "3.13", "3.14"]'
+    secrets:
+      codecov_token: ${{ secrets.CODECOV_TOKEN }}
 
   tests-mariadb-linux-10_11:
     needs: [ tests-mariadb-linux-11 ]
@@ -33,6 +39,8 @@ jobs:
     with:
       mariadb: 10.11
       python-versions: '["3.13", "3.14"]'
+    secrets:
+      codecov_token: ${{ secrets.CODECOV_TOKEN }}
 
   tests-mysql-macosx:
     runs-on: macos-latest
@@ -52,12 +60,29 @@ jobs:
     - name: Check MySQL Version
       run: mysqld --version
     - name: Run test
+      id: run_serial_tests
       uses: fizyk/actions-reuse/.github/actions/pipenv@v4.4.5
       with:
         python-version: ${{ matrix.python-version }}
         allow-prereleases: true
-        command: pytest -n 0 -k "not mysqlnoproc" --cov-report=xml --mysql-user=root --basetemp=/tmp/pytest_mysql
+        command: python -m coverage run --data-file=.coverage.serial -m pytest -n 0 -k "not mysqlnoproc" --mysql-user=root --basetemp=/tmp/pytest_mysql
         cache: false
+        env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.serial"}'
+    - name: Combine and export serial coverage
+      if: ${{ always() && (steps.run_serial_tests.conclusion == 'success' || steps.run_serial_tests.conclusion == 'failure') }}
+      uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.5
+      with:
+        data-file: .coverage.serial
+        output-file: coverage-serial.xml
+    - name: Upload coverage to Codecov
+      if: ${{ always() }}
+      uses: codecov/codecov-action@v5.5.3
+      with:
+        files: coverage-serial.xml
+        flags: macos,mysql
+        env_vars: OS,PYTHON
+        fail_ci_if_error: false
+        token: ${{ secrets.CODECOV_TOKEN }}
 
   tests-mariadb-macosx:
     runs-on: macos-latest
@@ -77,9 +102,26 @@ jobs:
     - name: Check MySQL Version
       run: mysqld --version
     - name: Run test
+      id: run_serial_tests
       uses: fizyk/actions-reuse/.github/actions/pipenv@v4.4.5
       with:
         python-version: ${{ matrix.python-version }}
         allow-prereleases: true
-        command: pytest --mysql-user=$USER -n 0 -k "not mysqlnoproc" --cov-report=xml --basetemp=/tmp/pytest_mysql
+        command: python -m coverage run --data-file=.coverage.serial -m pytest --mysql-user=$USER -n 0 -k "not mysqlnoproc" --basetemp=/tmp/pytest_mysql
         cache: false
+        env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.serial"}'
+    - name: Combine and export serial coverage
+      if: ${{ always() && (steps.run_serial_tests.conclusion == 'success' || steps.run_serial_tests.conclusion == 'failure') }}
+      uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.5
+      with:
+        data-file: .coverage.serial
+        output-file: coverage-serial.xml
+    - name: Upload coverage to Codecov
+      if: ${{ always() }}
+      uses: codecov/codecov-action@v5.5.3
+      with:
+        files: coverage-serial.xml
+        flags: macos,mariadb
+        env_vars: OS,PYTHON
+        fail_ci_if_error: false
+        token: ${{ secrets.CODECOV_TOKEN }}
