@@ -56,10 +56,10 @@ include = ["pytest_mysql*"]
 exclude = ["tests*"]
 namespaces = false
 
-[tool.pytest.ini_options]
-xfail_strict=true
-addopts = "--max-worker-restart=0 --showlocals --verbose"
-testpaths = "tests"
+[tool.pytest]
+xfail_strict = true
+addopts = ["--max-worker-restart=0", "--showlocals", "--verbose"]
+testpaths = ["tests"]
 mysql_dbname = "pytestmysql"
 
 [tool.ruff]
