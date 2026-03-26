@@ -15,7 +15,7 @@ pytest-mysql = {path = ".", editable = true}
 towncrier = "==25.8.0"
 pytest-xdist = "==3.8.0"
 mock = "==5.2.0"
-coverage = "==7.10.7"
+coverage = "==7.13.5"
 tbump = "==6.11.0"
 mypy = "==1.18.2"
 types-pymysql = "==1.1.0.20250916"
