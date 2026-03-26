@@ -55,9 +55,9 @@ def mysql_noproc(
 
         """
         config = get_config(request)
-        mysql_port = int(port or config["port"] or 3306)
-        mysql_host = host or config["host"]
-        mysql_user = user or config["user"] or "root"
+        mysql_port = int(port or config.port or 3306)
+        mysql_host = host or config.host
+        mysql_user = user or config.user or "root"
 
         mysql_executor = NoopMySQLExecutor(
             user=mysql_user,

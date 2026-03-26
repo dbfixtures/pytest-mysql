@@ -79,14 +79,14 @@ def mysql_proc(
 
         """
         config = get_config(request)
-        mysql_mysqld = mysqld_exec or config["mysqld"]
-        mysql_admin_exec = admin_executable or config["admin"]
-        mysql_mysqld_safe = mysqld_safe or config["mysqld_safe"]
-        mysql_port = get_port(port) or get_port(config["port"])
+        mysql_mysqld = mysqld_exec or config.mysqld
+        mysql_admin_exec = admin_executable or config.admin
+        mysql_mysqld_safe = mysqld_safe or config.mysqld_safe
+        mysql_port = get_port(port) or get_port(config.port)
         assert mysql_port
-        mysql_host = host or config["host"]
-        mysql_params = params or config["params"]
-        mysql_install_db = install_db or config["install_db"]
+        mysql_host = host or config.host
+        mysql_params = params or config.params
+        mysql_install_db = install_db or config.install_db
 
         tmpdir = tmp_path_factory.mktemp(f"pytest-mysql-{request.fixturename}")
 
@@ -100,7 +100,7 @@ def mysql_proc(
             )
 
         logfile_path = tmpdir / f"mysql-server.{port}.log"
-        logsdir = config["logsdir"]
+        logsdir = config.logsdir
         if logsdir:
             warn(
                 f"mysql_logsdir and --mysql-logsdir config option is "
@@ -118,7 +118,7 @@ def mysql_proc(
             logfile_path=str(logfile_path),
             base_directory=tmpdir,
             params=mysql_params,
-            user=user or config["user"] or "root",
+            user=user or config.user or "root",
             host=mysql_host,
             port=mysql_port,
             install_db=mysql_install_db,
