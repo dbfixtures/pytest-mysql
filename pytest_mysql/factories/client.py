@@ -97,8 +97,8 @@ def mysql(
             process.start()
 
         mysql_user = process.user
-        mysql_passwd = passwd or config["passwd"]
-        mysql_db = dbname or config["dbname"]
+        mysql_passwd = passwd or config.passwd
+        mysql_db = dbname or config.dbname
 
         connection_kwargs: dict[str, Any] = {
             "host": process.host,
