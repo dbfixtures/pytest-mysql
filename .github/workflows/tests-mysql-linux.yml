@@ -87,7 +87,7 @@ jobs:
           data-file: .coverage.noproc
           output-file: coverage-noproc.xml
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5.5.3
+        uses: codecov/codecov-action@v6.0.0
         with:
           files: coverage-serial.xml,coverage-xdist.xml,coverage-noproc.xml
           flags: linux,mysql

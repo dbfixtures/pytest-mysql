@@ -76,7 +76,7 @@ jobs:
         output-file: coverage-serial.xml
     - name: Upload coverage to Codecov
       if: ${{ always() }}
-      uses: codecov/codecov-action@v5.5.3
+      uses: codecov/codecov-action@v6.0.0
       with:
         files: coverage-serial.xml
         flags: macos,mysql
@@ -118,7 +118,7 @@ jobs:
         output-file: coverage-serial.xml
     - name: Upload coverage to Codecov
       if: ${{ always() }}
-      uses: codecov/codecov-action@v5.5.3
+      uses: codecov/codecov-action@v6.0.0
       with:
         files: coverage-serial.xml
         flags: macos,mariadb
