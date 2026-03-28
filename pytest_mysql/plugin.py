@@ -29,6 +29,7 @@ _help_mysqld_safe = "Path to MySQL's init executable"
 _help_logsdir = "[DEPRECATED] Logs directory location"
 _help_host = "Host at which MySQL will accept connections"
 _help_port = "Port at which MySQL will accept connections"
+_help_port_search_count = "Number of times, pytest-mysql will search for free port"
 _help_user = "MySQL username"
 _help_passwd = "MySQL password"
 _help_dbname = "Test database name"
@@ -38,38 +39,6 @@ _help_params = "Starting parameters for the MySQL"
 def pytest_addoption(parser: Parser) -> None:
     """Plugin configuration."""
     parser.addini(name="mysql_mysqld", help=_help_mysqld, default="mysqld")
-
-    parser.addini(name="mysql_mysqld_safe", help=_help_mysqld_safe, default="mysqld_safe")
-
-    parser.addini(name="mysql_admin", help=_help_admin, default="mysqladmin")
-
-    parser.addini(
-        name="mysql_install_db",
-        help=_help_install_db,
-        default="mysql_install_db",
-    )
-
-    parser.addini(name="mysql_host", help=_help_host, default="localhost")
-
-    parser.addini(
-        name="mysql_port",
-        help=_help_port,
-        default=None,
-    )
-
-    parser.addini(name="mysql_user", help=_help_user, default="root")
-
-    parser.addini(name="mysql_passwd", help=_help_passwd, default="")
-
-    parser.addini(name="mysql_dbname", help=_help_dbname, default="test")
-
-    parser.addini(name="mysql_params", help=_help_params, default="")
-
-    parser.addini(
-        name="mysql_logsdir",
-        help=_help_logsdir,
-    )
-
     parser.addoption(
         "--mysql-mysqld",
         action="store",
@@ -78,6 +47,7 @@ def pytest_addoption(parser: Parser) -> None:
         help=_help_mysqld,
     )
 
+    parser.addini(name="mysql_mysqld_safe", help=_help_mysqld_safe, default="mysqld_safe")
     parser.addoption(
         "--mysql-mysqld-safe",
         action="store",
@@ -86,6 +56,7 @@ def pytest_addoption(parser: Parser) -> None:
         help=_help_mysqld_safe,
     )
 
+    parser.addini(name="mysql_admin", help=_help_admin, default="mysqladmin")
     parser.addoption(
         "--mysql-admin",
         action="store",
@@ -94,6 +65,11 @@ def pytest_addoption(parser: Parser) -> None:
         help=_help_admin,
     )
 
+    parser.addini(
+        name="mysql_install_db",
+        help=_help_install_db,
+        default="mysql_install_db",
+    )
     parser.addoption(
         "--mysql-install-db",
         action="store",
@@ -102,6 +78,7 @@ def pytest_addoption(parser: Parser) -> None:
         help=_help_install_db,
     )
 
+    parser.addini(name="mysql_host", help=_help_host, default="localhost")
     parser.addoption(
         "--mysql-host",
         action="store",
@@ -109,16 +86,40 @@ def pytest_addoption(parser: Parser) -> None:
         help=_help_host,
     )
 
+    parser.addini(
+        name="mysql_port",
+        help=_help_port,
+        default=None,
+    )
     parser.addoption("--mysql-port", action="store", dest="mysql_port", help=_help_port)
 
+    parser.addini(
+        name="mysql_port_search_count", type="int", help=_help_port_search_count, default=5
+    )
+    parser.addoption(
+        "--mysql-port-search-count",
+        action="store",
+        type=int,
+        dest="mysql_port_search_count",
+        help=_help_port_search_count,
+    )
+
+    parser.addini(name="mysql_user", help=_help_user, default="root")
     parser.addoption("--mysql-user", action="store", dest="mysql_user", help=_help_user)
 
+    parser.addini(name="mysql_passwd", help=_help_passwd, default="")
     parser.addoption("--mysql-passwd", action="store", dest="mysql_passwd", help=_help_passwd)
 
+    parser.addini(name="mysql_dbname", help=_help_dbname, default="test")
     parser.addoption("--mysql-dbname", action="store", dest="mysql_dbname", help=_help_dbname)
 
+    parser.addini(name="mysql_params", help=_help_params, default="")
     parser.addoption("--mysql-params", action="store", dest="mysql_params", help=_help_params)
 
+    parser.addini(
+        name="mysql_logsdir",
+        help=_help_logsdir,
+    )
     parser.addoption(
         "--mysql-logsdir",
         action="store",

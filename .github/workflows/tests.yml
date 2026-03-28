@@ -65,7 +65,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
         allow-prereleases: true
-        command: python -m coverage run --data-file=.coverage.serial -m pytest -n 0 -k "not mysqlnoproc" --mysql-user=root --basetemp=/tmp/pytest_mysql
+        command: python -m coverage run --data-file=.coverage.serial -m pytest -p no:xdist -k "not mysqlnoproc" --mysql-user=root --basetemp=/tmp/pytest_mysql
         cache: false
         env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.serial"}'
     - name: Combine and export serial coverage
@@ -107,7 +107,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
         allow-prereleases: true
-        command: python -m coverage run --data-file=.coverage.serial -m pytest --mysql-user=$USER -n 0 -k "not mysqlnoproc" --basetemp=/tmp/pytest_mysql
+        command: python -m coverage run --data-file=.coverage.serial -m pytest --mysql-user=$USER -p no:xdist -k "not mysqlnoproc" --basetemp=/tmp/pytest_mysql
         cache: false
         env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.serial"}'
     - name: Combine and export serial coverage

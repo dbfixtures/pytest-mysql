@@ -114,6 +114,12 @@ You can pick which you prefer, but remember that these settings are handled in t
      - mysql_port
      - yes (3306)
      - random
+   * - Free port search count
+     - port_search_count
+     - --mysql-port-search-count
+     - mysql_port_search_count
+     - -
+     - 5
    * - MySQL user to work with
      - user
      - --mysql-user

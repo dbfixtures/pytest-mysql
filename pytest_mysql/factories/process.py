@@ -18,15 +18,22 @@
 """Process fixture factory for MySQL database."""
 
 from pathlib import Path
-from typing import Callable, Generator
+from typing import Callable, Generator, Iterable
 from warnings import warn
 
 import pytest
-from port_for import PortType, get_port
+from port_for import PortForException, PortType, get_port
 from pytest import FixtureRequest, TempPathFactory
 
-from pytest_mysql.config import get_config
+from pytest_mysql.config import MySQLConfig, get_config
 from pytest_mysql.executor import MySQLExecutor
+
+
+def _mysql_port(port: PortType | None, config: MySQLConfig, excluded_ports: Iterable[int]) -> int:
+    """User specified port, otherwise find an unused port from config."""
+    mysql_port = get_port(port, excluded_ports) or get_port(config.port, excluded_ports)
+    assert mysql_port is not None
+    return mysql_port
 
 
 def mysql_proc(
@@ -82,9 +89,39 @@ def mysql_proc(
         mysql_mysqld = mysqld_exec or config.mysqld
         mysql_admin_exec = admin_executable or config.admin
         mysql_mysqld_safe = mysqld_safe or config.mysqld_safe
-        mysql_port = get_port(port) or get_port(config.port)
-        assert mysql_port
+
         mysql_host = host or config.host
+
+        port_path = tmp_path_factory.getbasetemp()
+        if hasattr(request.config, "workerinput"):
+            port_path = tmp_path_factory.getbasetemp().parent
+
+        n = 0
+        used_ports: set[int] = set()
+        while True:
+            try:
+                mysql_port = _mysql_port(port, config, used_ports)
+                port_filename_path = port_path / f"mysql-{mysql_port}.port"
+                if mysql_port in used_ports:
+                    raise PortForException(
+                        f"Port {mysql_port} already in use, "
+                        f"probably by other instances of the test. "
+                        f"{port_filename_path} is already used."
+                    )
+                used_ports.add(mysql_port)
+                with port_filename_path.open("x") as port_file:
+                    port_file.write(f"mysql_port {mysql_port}\n")
+                break
+            except FileExistsError:
+                n += 1
+                if n >= config.port_search_count:
+                    raise PortForException(
+                        f"Attempted {n} times to select ports. "
+                        f"All attempted ports: {', '.join(map(str, used_ports))} are already "
+                        f"in use, probably by other instances of the test."
+                    ) from None
+        assert mysql_port
+
         mysql_params = params or config.params
         mysql_install_db = install_db or config.install_db
 
