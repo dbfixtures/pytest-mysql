@@ -16,6 +16,7 @@ class MySQLConfig:
     admin: str
     host: str
     port: str
+    port_search_count: int
     user: str
     passwd: str
     dbname: str
@@ -37,6 +38,7 @@ def get_config(request: FixtureRequest) -> MySQLConfig:
         admin=get_conf_option("admin"),
         host=get_conf_option("host"),
         port=get_conf_option("port"),
+        port_search_count=get_conf_option("port_search_count"),
         user=get_conf_option("user"),
         passwd=get_conf_option("passwd"),
         dbname=get_conf_option("dbname"),
