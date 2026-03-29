@@ -32,6 +32,10 @@ It allows you to specify fixtures for MySQL process and client.
     Only MySQL 5.7.6 and up are supported. For older versions, please use pytest-mysql 2.0.3
     Although Pull Request to add back support for older MySQL versions are welcome.
 
+.. image:: https://raw.githubusercontent.com/dbfixtures/pytest-mysql/main/docs/images/architecture.svg
+    :alt: Project Architecture Diagram
+    :align: center
+
 How to use
 ==========
 

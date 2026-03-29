@@ -1,0 +1,19 @@
+sequenceDiagram
+    autonumber
+    participant Pytest as Pytest runner
+    participant MySQLProc as mysql_proc fixture (session scope)
+    participant MySQL as mysql fixture (function scope)
+    participant MySQLServer as MySQL server
+    participant TestDB as Per-test DB (created by mysql fixture)
+
+    Pytest->>MySQLProc: first test requests mysql fixture dependency
+    MySQLProc->>MySQLServer: initialize datadir and start server
+    Note right of MySQLProc: Server starts once per test session
+    loop per test
+        Pytest->>MySQL: request mysql fixture
+        MySQL->>MySQLServer: CREATE DATABASE {TEST_DB_NAME}
+        MySQL->>MySQLServer: USE {TEST_DB_NAME}
+        Pytest->>TestDB: run test against selected DB
+        MySQL->>MySQLServer: teardown: DROP DATABASE IF EXISTS {TEST_DB_NAME}
+    end
+    MySQLProc->>MySQLServer: shutdown server at session end
