@@ -28,10 +28,10 @@ classifiers = [
     "Framework :: Pytest",
 ]
 dependencies = [
-    "pytest >= 6.2",
-    "port-for >= 0.6.0",
-    "mirakuru",
-    "pymysql",
+    "pytest >= 8.4",
+    "port-for >= 0.7.3",
+    "mirakuru >= 2.6.0",
+    "pymysql >= 1.1.1",
     "packaging >= 23"
 ]
 requires-python = ">= 3.10"
