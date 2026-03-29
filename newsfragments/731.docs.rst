@@ -1,0 +1,1 @@
+Documented the pytest-mysql plugin architecture with a new sequence diagram.
