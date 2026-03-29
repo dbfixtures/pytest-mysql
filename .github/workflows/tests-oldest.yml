@@ -1,0 +1,178 @@
+name: Run pytest tests
+
+on:
+  workflow_call:
+    inputs:
+      python-versions:
+        description: 'Supported python versions'
+        default: '["3.10", "3.11", "3.12", "3.13", "3.14", "pypy-3.11"]'
+        required: false
+        type: string
+    secrets:
+      codecov_token:
+        description: 'Codecov token'
+        required: false
+
+jobs:
+  mysql:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ${{ fromJSON(inputs.python-versions) }}
+    env:
+      OS: ubuntu-latest
+      PYTHON: ${{ matrix.python-version }}
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: tests
+        ports:
+          - 3333:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ankane/setup-mysql@v1
+        with:
+          mysql-version: "8.4"
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Check MySQL Version
+        run: mysqld --version
+      - name: Setup python environment
+        uses: fizyk/actions-reuse/.github/actions/pipenv@v4.4.5
+        with:
+          python-version: ${{ matrix.python-version }}
+          allow-prereleases: true
+          command: pip install -r oldest/requirements.txt
+      - name: Run test
+        id: run_serial_tests
+        uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.5
+        with:
+          command: python -m coverage run --data-file=.coverage.serial -m pytest -c pyproject.oldest.toml -p no:xdist --mysql-user=$USER -k "not mysqlnoproc"
+          env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.serial"}'
+      - name: Combine and export serial coverage
+        if: ${{ always() && (steps.run_serial_tests.conclusion == 'success' || steps.run_serial_tests.conclusion == 'failure') }}
+        uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.5
+        with:
+          data-file: .coverage.serial
+          output-file: coverage-serial.xml
+      - name: Run xdist test
+        id: run_xdist_tests
+        uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.5
+        with:
+          command: python -m coverage run --data-file=.coverage.xdist -m pytest -c pyproject.oldest.toml --max-worker-restart=0 -n auto --mysql-user=$USER -k "not mysqlnoproc"
+          env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.xdist"}'
+      - name: Combine and export xdist coverage
+        if: ${{ always() && (steps.run_xdist_tests.conclusion == 'success' || steps.run_xdist_tests.conclusion == 'failure') }}
+        uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.5
+        with:
+          data-file: .coverage.xdist
+          output-file: coverage-xdist.xml
+      - name: Run noproc test
+        id: run_noproc_tests
+        uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.5
+        with:
+          command: python -m coverage run --data-file=.coverage.noproc -m pytest -c pyproject.oldest.toml -p no:xdist -k mysqlnoproc --mysql-host="127.0.0.1" --mysql-port=3333
+          env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.noproc"}'
+      - name: Combine and export noproc coverage
+        if: ${{ always() && (steps.run_noproc_tests.conclusion == 'success' || steps.run_noproc_tests.conclusion == 'failure') }}
+        uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.5
+        with:
+          data-file: .coverage.noproc
+          output-file: coverage-noproc.xml
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v6.0.0
+        with:
+          files: coverage-serial.xml,coverage-xdist.xml,coverage-noproc.xml
+          flags: linux,mysql
+          env_vars: OS,PYTHON
+          fail_ci_if_error: false
+          token: ${{ secrets.codecov_token }}
+
+  mariadb:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ${{ fromJSON(inputs.python-versions) }}
+    env:
+      OS: ubuntu-latest
+      PYTHON: ${{ matrix.python-version }}
+    services:
+      mysql:
+        image: mariadb:10.11
+        env:
+          MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
+          MARIADB_DATABASE: tests
+        ports:
+          - 3333:3306
+        options: --health-cmd="healthcheck.sh --su-mysql --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ankane/setup-mariadb@v1
+        with:
+          mariadb-version: "10.11"
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Check MariaDB Version
+        run: mysqld --version
+      - name: Setup python environment
+        uses: fizyk/actions-reuse/.github/actions/pipenv@v4.4.5
+        with:
+          python-version: ${{ matrix.python-version }}
+          allow-prereleases: true
+          command: pip install -r oldest/requirements.txt
+      - name: Run test
+        id: run_serial_tests
+        uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.5
+        with:
+          command: python -m coverage run --data-file=.coverage.serial -m pytest -c pyproject.oldest.toml -p no:xdist --mysql-user=$USER -k "not mysqlnoproc"
+          env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.serial"}'
+      - name: Combine and export serial coverage
+        if: ${{ always() && (steps.run_serial_tests.conclusion == 'success' || steps.run_serial_tests.conclusion == 'failure') }}
+        uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.5
+        with:
+          data-file: .coverage.serial
+          output-file: coverage-serial.xml
+      - name: Run xdist test
+        id: run_xdist_tests
+        uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.5
+        with:
+          command: python -m coverage run --data-file=.coverage.xdist -m pytest -c pyproject.oldest.toml --max-worker-restart=0 -n auto --mysql-user=$USER -k "not mysqlnoproc"
+          env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.xdist"}'
+      - name: Combine and export xdist coverage
+        if: ${{ always() && (steps.run_xdist_tests.conclusion == 'success' || steps.run_xdist_tests.conclusion == 'failure') }}
+        uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.5
+        with:
+          data-file: .coverage.xdist
+          output-file: coverage-xdist.xml
+      - name: Run noproc test
+        id: run_noproc_tests
+        uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.5
+        with:
+          command: python -m coverage run --data-file=.coverage.noproc -m pytest -c pyproject.oldest.toml -p no:xdist -k mysqlnoproc --mysql-host="127.0.0.1" --mysql-port=3333
+          env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.noproc"}'
+      - name: Combine and export noproc coverage
+        if: ${{ always() && (steps.run_noproc_tests.conclusion == 'success' || steps.run_noproc_tests.conclusion == 'failure') }}
+        uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.5
+        with:
+          data-file: .coverage.noproc
+          output-file: coverage-noproc.xml
+      - name: Upload coverage to Codecov
+        if: ${{ always() }}
+        uses: codecov/codecov-action@v6.0.0
+        with:
+          files: coverage-serial.xml,coverage-xdist.xml,coverage-noproc.xml
+          flags: linux,mariadb
+          env_vars: OS,PYTHON
+          fail_ci_if_error: false
+          token: ${{ secrets.codecov_token }}
