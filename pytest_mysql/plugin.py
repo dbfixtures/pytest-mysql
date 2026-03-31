@@ -116,18 +116,6 @@ def pytest_addoption(parser: Parser) -> None:
     parser.addini(name="mysql_params", help=_help_params, default="")
     parser.addoption("--mysql-params", action="store", dest="mysql_params", help=_help_params)
 
-    parser.addini(
-        name="mysql_logsdir",
-        help=_help_logsdir,
-    )
-    parser.addoption(
-        "--mysql-logsdir",
-        action="store",
-        metavar="path",
-        dest="mysql_logsdir",
-        help=_help_logsdir,
-    )
-
 
 mysql_proc = factories.mysql_proc()
 mysql_noproc = factories.mysql_noproc()

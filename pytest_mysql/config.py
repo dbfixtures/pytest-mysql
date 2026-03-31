@@ -21,7 +21,6 @@ class MySQLConfig:
     passwd: str
     dbname: str
     params: str
-    logsdir: str
     install_db: str
 
 
@@ -43,6 +42,5 @@ def get_config(request: FixtureRequest) -> MySQLConfig:
         passwd=get_conf_option("passwd"),
         dbname=get_conf_option("dbname"),
         params=get_conf_option("params"),
-        logsdir=get_conf_option("logsdir"),
         install_db=get_conf_option("install_db"),
     )
