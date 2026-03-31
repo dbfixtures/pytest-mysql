@@ -148,12 +148,6 @@ You can pick which you prefer, but remember that these settings are handled in t
      - mysql_params
      - -
      -
-   * - Log directory location [DEPRECATED]
-     - logsdir
-     - --mysql-logsdir
-     - mysql_logsdir
-     - -
-     - $TMPDIR
 
 
 Example usage:

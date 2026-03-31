@@ -19,7 +19,6 @@
 
 from pathlib import Path
 from typing import Callable, Generator, Iterable
-from warnings import warn
 
 import pytest
 from port_for import PortForException, PortType, get_port
@@ -44,7 +43,6 @@ def mysql_proc(
     user: str | None = None,
     port: PortType | None = -1,
     params: str | None = None,
-    logs_prefix: str = "",
     install_db: str | None = None,
 ) -> Callable[[FixtureRequest, TempPathFactory], Generator[MySQLExecutor, None, None]]:
     """Process fixture factory for MySQL server.
@@ -126,27 +124,7 @@ def mysql_proc(
         mysql_install_db = install_db or config.install_db
 
         tmpdir = tmp_path_factory.mktemp(f"pytest-mysql-{request.fixturename}")
-
-        if logs_prefix:
-            warn(
-                f"logfile_prefix factory argument is deprecated, "
-                f"and will be dropped in future releases. All fixture related "
-                f"data resides within {tmpdir}, and logs_prefix is only used, "
-                f"if deprecated logsdir is configured",
-                DeprecationWarning,
-            )
-
         logfile_path = tmpdir / f"mysql-server.{port}.log"
-        logsdir = config.logsdir
-        if logsdir:
-            warn(
-                f"mysql_logsdir and --mysql-logsdir config option is "
-                f"deprecated, and will be dropped in future releases. "
-                f"All fixture related data resides within {tmpdir}",
-                DeprecationWarning,
-            )
-            if logs_prefix:
-                logfile_path = Path(logsdir) / f"{logs_prefix}mysql-server.{mysql_port}.log"
 
         mysql_executor = MySQLExecutor(
             mysqld_safe=mysql_mysqld_safe,
