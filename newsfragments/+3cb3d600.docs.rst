@@ -1,0 +1,4 @@
+Improved README onboarding and clarity:
+
+* added prerequisites and a quickstart for the first test,
+* clarified fixture cleanup behavior, and polished grammar/command consistency.

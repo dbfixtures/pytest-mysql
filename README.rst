@@ -24,13 +24,12 @@ pytest-mysql
 What is this?
 =============
 
-This is a pytest plugin, that enables you to test your code that relies on a running MySQL Database.
-It allows you to specify fixtures for MySQL process and client.
+A pytest plugin for tests that rely on a running MySQL or MariaDB database.
+It provides process and client fixtures.
 
 .. warning::
 
-    Only MySQL 5.7.6 and up are supported. For older versions, please use pytest-mysql 2.0.3
-    Although Pull Request to add back support for older MySQL versions are welcome.
+    Tested with MySQL 8.0+ and MariaDB 10.11+.
 
 .. image:: https://raw.githubusercontent.com/dbfixtures/pytest-mysql/main/docs/images/architecture.svg
     :alt: Project Architecture Diagram
@@ -39,15 +38,15 @@ It allows you to specify fixtures for MySQL process and client.
 How to use
 ==========
 
-Plugin contains two fixtures
+The plugin contains three fixtures:
 
-* **mysql** - it's a client fixture that has functional scope. After each test drops test database from MySQL ensuring repeatability.
-* **mysql_proc** - session scoped fixture, that starts MySQL instance at it's first use and stops at the end of the tests.
-* **mysql_noproc** - session scoped fixtures, that allows to connect to already existing MySQL instance, and cleans the database at the end of the tests
+* **mysql** - a function-scoped client fixture that drops the test database after each test to ensure repeatability.
+* **mysql_proc** - a session-scoped process fixture that starts a local MySQL instance on first use and stops it at the end of the test session.
+* **mysql_noproc** - a session-scoped fixture that connects to an already running MySQL instance.
 
-Simply include one of these fixtures into your tests fixture list.
+Simply include one of these fixtures in your test fixture list.
 
-You can also create additional mysql client and process fixtures if you'd need to:
+You can also create additional MySQL client and process fixtures if you need to:
 
 
 .. code-block:: python
@@ -63,14 +62,45 @@ You can also create additional mysql client and process fixtures if you'd need t
 
     Each MySQL process fixture can be configured in a different way than the others through the fixture factory arguments.
 
+Prerequisites
+-------------
+
+Install MySQL or MariaDB on the machine where tests are executed.
+This plugin relies on binaries provided by those installations (for example ``mysqld`` and ``mysqladmin``).
+
+Use ``mysql_proc`` to start a local MySQL process from installed binaries.
+Use ``mysql_noproc`` to connect to an already running MySQL/MariaDB server.
+
+Quickstart: first test
+----------------------
+
+Install the plugin:
+
+.. code-block:: shell
+
+    pip install pytest-mysql
+
+Create a minimal test that uses the built-in fixture:
+
+.. code-block:: python
+
+    def test_mysql_fixture_available(mysql):
+        assert mysql is not None
+
+Run your tests:
+
+.. code-block:: shell
+
+    pytest -q
+
 Configuration
 =============
 
-You can define your settings in three ways, it's fixture factory argument, command line option and pytest.ini configuration option.
-You can pick which you prefer, but remember that these settings are handled in the following order:
+You can define settings in three ways: fixture factory arguments, command-line options, and ``pytest.ini`` configuration options.
+These settings are applied in the following order:
 
     * ``Fixture factory argument``
-    * ``Command line option``
+    * ``Command-line option``
     * ``Configuration option in your pytest.ini file``
 
 .. list-table:: Configuration options
@@ -80,7 +110,7 @@ You can pick which you prefer, but remember that these settings are handled in t
      - Fixture factory argument
      - Command line option
      - pytest.ini option
-     - Noop process fixture
+     - Noproc process fixture
      - Default
    * - Path to executable
      - mysqld_exec
@@ -163,10 +193,10 @@ Example usage:
 
     .. code-block::
 
-        py.test tests --mysql-port=8888
+        pytest tests --mysql-port=8888
 
 
-* specify your port as ``mysql_port`` in your ``pytest.ini`` file.
+* specify your port as ``mysql_port`` in your ``pytest.ini`` file
 
     To do so, put a line like the following under the ``[pytest]`` section of your ``pytest.ini``:
 
@@ -178,15 +208,17 @@ Example usage:
 Examples
 ========
 
+The examples below show advanced integration patterns after your first smoke test is passing.
+
 Populating database for tests
 -----------------------------
 
 With SQLAlchemy
 +++++++++++++++
 
-This example shows how to populate database and create an SQLAlchemy's ORM connection:
+This example shows how to populate the database and create an SQLAlchemy ORM connection:
 
-Sample below is simplified session fixture from
+The sample below is a simplified session fixture from
 `pyramid_fullauth <https://github.com/fizyk/pyramid_fullauth/>`_ tests:
 
 .. code-block:: python
@@ -247,7 +279,7 @@ Sample below is simplified session fixture from
 Connecting to MySQL/MariaDB (in a docker)
 -----------------------------------------
 
-To connect to a docker run MySQL and run test on it, use noproc fixtures.
+To connect to MySQL or MariaDB running in Docker, use noproc fixtures.
 
 .. code-block:: sh
 
@@ -257,9 +289,9 @@ To connect to a docker run MySQL and run test on it, use noproc fixtures.
 
     docker run --name some-db -e MARIADB_ALLOW_EMPTY_PASSWORD=yes -d mariadb --expose 3306
 
-This will start MySQL in a docker container, however using a MySQL installed locally is not much different.
+This starts MySQL/MariaDB in a Docker container, but using a locally installed MySQL or MariaDB instance is similar.
 
-In tests, make sure that all your tests are using **mysql_noproc** fixture like that:
+In tests, make sure your tests use the **mysql_noproc** fixture like this:
 
 .. code-block:: python
 
@@ -287,13 +319,13 @@ Running on Docker/as root
 
 MySQL and MariaDB refuse to run as root by default, but we can force them by setting user=root in the configuration file.
 
-However most common and secure approach is to change user which runs tests on Docker:
+However, the most common and secure approach is to change the user that runs tests in Docker:
 
 .. code-block::
 
     USER nobody
 
-This line should switch your docker process to run on user nobody. See `this comment for example <https://github.com/dbfixtures/pytest-mysql/issues/62#issuecomment-367975723>`_
+This line should switch your Docker process to run as user ``nobody``. See `this comment for example <https://github.com/dbfixtures/pytest-mysql/issues/62#issuecomment-367975723>`_.
 
 Package resources
 -----------------
@@ -303,7 +335,7 @@ Package resources
 Release
 =======
 
-Install pipenv and --dev dependencies first, Then run:
+Install pipenv and ``--dev`` dependencies first, then run:
 
 .. code-block::
 
