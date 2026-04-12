@@ -3,6 +3,65 @@ CHANGELOG
 
 .. towncrier release notes start
 
+pytest-mysql 4.0.0 (2026-04-12)
+===============================
+
+Breaking changes
+----------------
+
+- Replace TypedDict-based config with a dataclass-based config. (`#727 <https://github.com/dbfixtures/pytest-mysql/issues/727>`_)
+- Drop support for Python 3.9 (`#733 <https://github.com/dbfixtures/pytest-mysql/issues/733>`_)
+- Removed deprecated logsdir configuration option. (`#757 <https://github.com/dbfixtures/pytest-mysql/issues/757>`_)
+
+
+Features
+--------
+
+- Improved xdist compatibility by introducing port-locking mechanism.
+
+  If one worker claims a port, it will lock it, and other xdist workers will
+  either check another port or raise an error with clear message. (`#633 <https://github.com/dbfixtures/pytest-mysql/issues/633>`_)
+- Add support for Python 3.14 (`#733 <https://github.com/dbfixtures/pytest-mysql/issues/733>`_)
+
+
+Bugfixes
+--------
+
+- Fix issue where tests in xdist might select the same port (`#633 <https://github.com/dbfixtures/pytest-mysql/issues/633>`_)
+- Replace each shell command string with an argv list and remove shell=True
+
+  Mitigate shell-injection risk by replacing `shell=True` command strings in `MySQLExecutor` with argv-style subprocess calls. (`#744 <https://github.com/dbfixtures/pytest-mysql/issues/744>`_)
+
+
+Documentation
+-------------
+
+- Documented the pytest-mysql plugin architecture with a new sequence diagram. (`#731 <https://github.com/dbfixtures/pytest-mysql/issues/731>`_)
+- Improved README onboarding and clarity:
+
+  * added prerequisites and a quickstart for the first test,
+  * clarified fixture cleanup behavior, and polished grammar/command consistency.
+
+
+Miscellaneous
+-------------
+
+- Run xdist tests on CI with -n auto. (`#633 <https://github.com/dbfixtures/pytest-mysql/issues/633>`_)
+- Update Docker/root related part of README (`#686 <https://github.com/dbfixtures/pytest-mysql/issues/686>`_)
+- Update workflows for actions-reuse 4.1.1 (`#720 <https://github.com/dbfixtures/pytest-mysql/issues/720>`_)
+- Replace black with ruff-format in pre-commit configuration (`#729 <https://github.com/dbfixtures/pytest-mysql/issues/729>`_)
+- Add workflow to run tests against oldest supported dependency versions. (`#730 <https://github.com/dbfixtures/pytest-mysql/issues/730>`_)
+- Validate package configuration against supported and required python versions in pre-commit. (`#732 <https://github.com/dbfixtures/pytest-mysql/issues/732>`_)
+- Add release workflow to ease the release process (`#734 <https://github.com/dbfixtures/pytest-mysql/issues/734>`_)
+- Updated pytest to version 9 and update it's configuration to be toml native. (`#752 <https://github.com/dbfixtures/pytest-mysql/issues/752>`_)
+- Adjust workflows for actions-reuse 3
+- Drop PR template, as the only check point there is already checked by coderabbit.
+- Improve reliability of Coverage reporting on CI
+- Install as editable package on CI, instead of import plugin to the test conftest file.
+- Updated links after repository transfer
+- Use pre-commit for maintaining code style and linting
+
+
 3.1.0 (2024-12-10)
 ==================
 

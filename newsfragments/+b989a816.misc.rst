@@ -1,1 +1,0 @@
-Install as editable package on CI, instead of import plugin to the test conftest file.

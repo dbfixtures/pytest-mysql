@@ -1,6 +1,6 @@
 [project]
 name = "pytest-mysql"
-version = "3.1.0"
+version = "4.0.0"
 description = "MySQL process and client fixtures for pytest"
 readme = "README.rst"
 keywords = ["tests", "pytest", "fixture", "mysql"]
@@ -39,7 +39,7 @@ requires-python = ">= 3.10"
 [project.urls]
 "Source" = "https://github.com/dbfixtures/pytest-mysql"
 "Bug Tracker" = "https://github.com/dbfixtures/pytest-mysql/issues"
-"Changelog" = "https://github.com/dbfixtures/pytest-mysql/blob/v3.1.0/CHANGES.rst"
+"Changelog" = "https://github.com/dbfixtures/pytest-mysql/blob/v4.0.0/CHANGES.rst"
 
 [project.entry-points."pytest11"]
 pytest_mysql = "pytest_mysql.plugin"
@@ -112,7 +112,7 @@ name = "Miscellaneous"
 showcontent = true
 
 [tool.tbump.version]
-current = "3.1.0"
+current = "4.0.0"
 
 # Example of a semver regexp.
 # Make sure this matches current_version before
