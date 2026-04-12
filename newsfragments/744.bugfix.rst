@@ -1,0 +1,3 @@
+Replace each shell command string with an argv list and remove shell=True
+
+Mitigate shell-injection risk by replacing `shell=True` command strings in `MySQLExecutor` with argv-style subprocess calls.
