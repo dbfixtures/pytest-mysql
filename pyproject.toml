@@ -72,6 +72,7 @@ select = [
     "F",   # pyflakes
     "I",   # isort
     "D",   # pydocstyle
+    "S602"
 ]
 
 [tool.towncrier]

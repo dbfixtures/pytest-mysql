@@ -105,18 +105,20 @@ class MySQLExecutor(TCPExecutor):
         """
         if self._initialised:
             return
-        init_command = (
-            f"{self.mysqld} --initialize-insecure "
-            f"--datadir={self.datadir} --tmpdir={self.base_directory} "
-            f"--log-error={self.logfile_path}"
-        )
-        subprocess.check_output(init_command, shell=True)
+        init_command = [
+            str(self.mysqld),
+            "--initialize-insecure",
+            f"--datadir={self.datadir}",
+            f"--tmpdir={self.base_directory}",
+            f"--log-error={self.logfile_path}",
+        ]
+        subprocess.check_output(init_command)
         self._initialised = True
 
-    def initialise_mysql_db_install(self) -> None:
-        """Initialise mysql directory for older MySQL installations or MariaDB.
+    def initialise_mysql_db_install(self) -> bool:
+        """Initialize the mysql directory for older MySQL installations or MariaDB.
 
-        #. Remove mysql directory if exist.
+        #. Remove the mysql directory if it existed.
         #. `Initialize MySQL data directory
             <https://dev.mysql.com/doc/refman/5.7/en/data-directory-initialization-mysqld.html>`_
 
@@ -125,26 +127,29 @@ class MySQLExecutor(TCPExecutor):
         :param str base_directory: path to base_directory
 
         """
+        if not self.install_db:
+            return False
         if self._initialised:
-            return
-        init_command = (
-            f"{self.install_db} --user={self.user} "
-            f"--datadir={self.datadir} --tmpdir={self.base_directory}"
-        )
-        subprocess.check_output(init_command, shell=True)
+            return True
+        init_command = [
+            self.install_db,
+            f"--user={self.user}",
+            f"--datadir={self.datadir}",
+            f"--tmpdir={self.base_directory}",
+        ]
+        subprocess.check_output(init_command)
         self._initialised = True
+        return True
 
     def start(self) -> "MySQLExecutor":
-        """Trigger initialisation during start."""
+        """Trigger initialization during start."""
         self._check_socket_path()
 
         implementation = self.implementation()
         if implementation == "mysql" and parse(self.version()) > parse("5.7.6"):
             self.initialize_mysqld()
         elif implementation in ["mysql", "mariadb"]:
-            if self.install_db:
-                self.initialise_mysql_db_install()
-            else:
+            if not self.initialise_mysql_db_install():
                 raise MySQLUnsupported("mysqld_init path is missing.")
         else:
             raise MySQLUnsupported("Only MySQL and MariaDB servers are supported with MariaDB.")
@@ -152,15 +157,23 @@ class MySQLExecutor(TCPExecutor):
 
     def shutdown(self) -> None:
         """Send shutdown command to the server."""
-        shutdown_command = (
-            f"{self.admin_exec} --socket={self.unixsocket} --user={self.user} shutdown"
-        )
+        shutdown_command = [
+            self.admin_exec,
+            f"--socket={self.unixsocket}",
+            f"--user={self.user}",
+            "shutdown",
+        ]
         try:
-            subprocess.check_output(shutdown_command, shell=True)
+            subprocess.check_output(shutdown_command)
         except subprocess.CalledProcessError:
             # Fallback to using root user for shutdown
-            shutdown_command = f"{self.admin_exec} --socket={self.unixsocket} --user=root shutdown"
-            subprocess.check_output(shutdown_command, shell=True)
+            shutdown_command = [
+                self.admin_exec,
+                f"--socket={self.unixsocket}",
+                "--user=root",
+                "shutdown",
+            ]
+            subprocess.check_output(shutdown_command)
 
     def stop(self, *args: Any, **kwargs: Any) -> "MySQLExecutor":
         """Stop the server."""
