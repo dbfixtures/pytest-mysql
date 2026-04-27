@@ -32,7 +32,7 @@ jobs:
       run: mysqld --version
     - name: Run test
       id: run_serial_tests
-      uses: fizyk/actions-reuse/.github/actions/pipenv@v4.4.6
+      uses: fizyk/actions-reuse/.github/actions/pipenv@v4.4.7
       with:
         python-version: ${{ matrix.python-version }}
         allow-prereleases: true
@@ -41,7 +41,7 @@ jobs:
         env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.serial"}'
     - name: Combine and export serial coverage
       if: ${{ always() && (steps.run_serial_tests.conclusion == 'success' || steps.run_serial_tests.conclusion == 'failure') }}
-      uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.6
+      uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.7
       with:
         data-file: .coverage.serial
         output-file: coverage-serial.xml
@@ -73,7 +73,7 @@ jobs:
       run: mysqld --version
     - name: Run test
       id: run_serial_tests
-      uses: fizyk/actions-reuse/.github/actions/pipenv@v4.4.6
+      uses: fizyk/actions-reuse/.github/actions/pipenv@v4.4.7
       with:
         python-version: ${{ matrix.python-version }}
         allow-prereleases: true
@@ -82,7 +82,7 @@ jobs:
         env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.serial"}'
     - name: Combine and export serial coverage
       if: ${{ always() && (steps.run_serial_tests.conclusion == 'success' || steps.run_serial_tests.conclusion == 'failure') }}
-      uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.6
+      uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.7
       with:
         data-file: .coverage.serial
         output-file: coverage-serial.xml

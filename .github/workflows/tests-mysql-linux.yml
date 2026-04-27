@@ -50,7 +50,7 @@ jobs:
         run: mysqld --version
       - name: Run test
         id: run_serial_tests
-        uses: fizyk/actions-reuse/.github/actions/pipenv@v4.4.6
+        uses: fizyk/actions-reuse/.github/actions/pipenv@v4.4.7
         with:
           python-version: ${{ matrix.python-version }}
           allow-prereleases: true
@@ -58,31 +58,31 @@ jobs:
           env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.serial"}'
       - name: Combine and export serial coverage
         if: ${{ always() && (steps.run_serial_tests.conclusion == 'success' || steps.run_serial_tests.conclusion == 'failure') }}
-        uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.6
+        uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.7
         with:
           data-file: .coverage.serial
           output-file: coverage-serial.xml
       - name: Run xdist test
         id: run_xdist_tests
-        uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.6
+        uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.7
         with:
           command: python -m coverage run --data-file=.coverage.xdist -m pytest --max-worker-restart=0 -n auto --mysql-user=$USER -k "not mysqlnoproc"
           env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.xdist"}'
       - name: Combine and export xdist coverage
         if: ${{ always() && (steps.run_xdist_tests.conclusion == 'success' || steps.run_xdist_tests.conclusion == 'failure') }}
-        uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.6
+        uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.7
         with:
           data-file: .coverage.xdist
           output-file: coverage-xdist.xml
       - name: Run noproc test
         id: run_noproc_tests
-        uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.6
+        uses: fizyk/actions-reuse/.github/actions/pipenv-run@v4.4.7
         with:
           command: python -m coverage run --data-file=.coverage.noproc -m pytest -p no:xdist -k mysqlnoproc --mysql-host="127.0.0.1" --mysql-port=3333
           env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.noproc"}'
       - name: Combine and export noproc coverage
         if: ${{ always() && (steps.run_noproc_tests.conclusion == 'success' || steps.run_noproc_tests.conclusion == 'failure') }}
-        uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.6
+        uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.7
         with:
           data-file: .coverage.noproc
           output-file: coverage-noproc.xml
