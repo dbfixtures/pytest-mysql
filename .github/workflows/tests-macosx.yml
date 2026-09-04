@@ -30,19 +30,16 @@ jobs:
         mysql-version: 8.4
     - name: Check MySQL Version
       run: mysqld --version
-    - name: Run test
-      id: run_serial_tests
-      uses: fizyk/actions-reuse/.github/actions/pipenv@v4.4.7
+    - name: Set up uv with python ${{ matrix.python-version }}
+      uses: fizyk/actions-reuse/.github/actions/uv-setup@7eefbd6ffc6c6787ad3be6ce93dcf475e3ae99b5 # v5.6.0
       with:
         python-version: ${{ matrix.python-version }}
-        allow-prereleases: true
-        command: python -m coverage run --data-file=.coverage.serial -m pytest -p no:xdist -k "not mysqlnoproc" --mysql-user=root --basetemp=/tmp/pytest_mysql
-        cache: false
-        env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.serial"}'
-    - name: Combine and export serial coverage
-      if: ${{ always() && (steps.run_serial_tests.conclusion == 'success' || steps.run_serial_tests.conclusion == 'failure') }}
-      uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.7
+    - name: Check MySQL Version
+      run: mysqld --version
+    - name: Run test
+      uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@7eefbd6ffc6c6787ad3be6ce93dcf475e3ae99b5 # v5.6.0
       with:
+        pytest-opts: -p no:xdist -k "not mysqlnoproc" --mysql-user=root --basetemp=/tmp/pytest_mysql
         data-file: .coverage.serial
         output-file: coverage-serial.xml
     - name: Upload coverage to Codecov
@@ -71,19 +68,14 @@ jobs:
         mariadb-version: "11.4"
     - name: Check MySQL Version
       run: mysqld --version
-    - name: Run test
-      id: run_serial_tests
-      uses: fizyk/actions-reuse/.github/actions/pipenv@v4.4.7
+    - name: Set up uv with python ${{ matrix.python-version }}
+      uses: fizyk/actions-reuse/.github/actions/uv-setup@7eefbd6ffc6c6787ad3be6ce93dcf475e3ae99b5 # v5.6.0
       with:
         python-version: ${{ matrix.python-version }}
-        allow-prereleases: true
-        command: python -m coverage run --data-file=.coverage.serial -m pytest --mysql-user=$USER -p no:xdist -k "not mysqlnoproc" --basetemp=/tmp/pytest_mysql
-        cache: false
-        env: '{"COVERAGE_PROCESS_START": ".coveragerc", "COVERAGE_FILE": ".coverage.serial"}'
-    - name: Combine and export serial coverage
-      if: ${{ always() && (steps.run_serial_tests.conclusion == 'success' || steps.run_serial_tests.conclusion == 'failure') }}
-      uses: fizyk/actions-reuse/.github/actions/coverage-combine-export@v4.4.7
+    - name: Run test
+      uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@7eefbd6ffc6c6787ad3be6ce93dcf475e3ae99b5 # v5.6.0
       with:
+        pytest-opts: --mysql-user=$USER -p no:xdist -k "not mysqlnoproc" --basetemp=/tmp/pytest_mysql
         data-file: .coverage.serial
         output-file: coverage-serial.xml
     - name: Upload coverage to Codecov
