@@ -24,8 +24,10 @@ jobs:
       OS: macos-latest
       PYTHON: ${{ matrix.python-version }}
     steps:
-    - uses: actions/checkout@v7
-    - uses: ankane/setup-mysql@v1
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+    - uses: ankane/setup-mysql@v1 # zizmor: ignore[unpinned-uses]
       with:
         mysql-version: 8.4
     - name: Check MySQL Version
@@ -44,7 +46,7 @@ jobs:
         output-file: coverage-serial.xml
     - name: Upload coverage to Codecov
       if: ${{ always() }}
-      uses: codecov/codecov-action@v6.0.0
+      uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v6.0.0
       with:
         files: coverage-serial.xml
         flags: macos,mysql
@@ -62,8 +64,10 @@ jobs:
       OS: macos-latest
       PYTHON: ${{ matrix.python-version }}
     steps:
-    - uses: actions/checkout@v7
-    - uses: ankane/setup-mariadb@v1
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+    - uses: ankane/setup-mariadb@v1 # zizmor: ignore[unpinned-uses]
       with:
         mariadb-version: "11.4"
     - name: Check MySQL Version
@@ -80,7 +84,7 @@ jobs:
         output-file: coverage-serial.xml
     - name: Upload coverage to Codecov
       if: ${{ always() }}
-      uses: codecov/codecov-action@v6.0.0
+      uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v6.0.0
       with:
         files: coverage-serial.xml
         flags: macos,mariadb
