@@ -38,6 +38,17 @@ repos:
       - id: rstcheck
         additional_dependencies: [sphinx, toml]
 
+  - repo: https://github.com/zizmorcore/zizmor-pre-commit
+    rev: v1.29.0
+    hooks:
+      - id: zizmor
+        args: [--no-progress, --fix]
+
+  - repo: https://github.com/kjanat/actionlint
+    rev: v1.14.0
+    hooks:
+      - id: actionlint
+
   - repo: https://github.com/tox-dev/pyproject-fmt
     rev: v2.28.1
     hooks:

@@ -6,6 +6,8 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions: {}
+
 jobs:
   tests-mysql-linux:
     uses: ./.github/workflows/tests-mysql-linux.yml
