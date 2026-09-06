@@ -76,7 +76,9 @@ select = [
     "F",    # pyflakes
     "I",    # isort
     "D",    # pydocstyle
-    "S602"
+    "S602",
+    "FBT",  # flake8-boolean-trap
+    "PT",   # flake8-pytest-style
 ]
 
 [tool.pyproject-fmt]

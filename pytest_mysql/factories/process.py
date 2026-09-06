@@ -22,7 +22,6 @@ from typing import Callable, Generator, Iterable
 
 import pytest
 from port_for import PortForException, PortType, get_port
-from pytest import FixtureRequest, TempPathFactory
 
 from pytest_mysql.config import MySQLConfig, get_config
 from pytest_mysql.executor import MySQLExecutor
@@ -44,7 +43,9 @@ def mysql_proc(
     port: PortType | None = -1,
     params: str | None = None,
     install_db: str | None = None,
-) -> Callable[[FixtureRequest, TempPathFactory], Generator[MySQLExecutor, None, None]]:
+) -> Callable[
+    [pytest.FixtureRequest, pytest.TempPathFactory], Generator[MySQLExecutor, None, None]
+]:
     """Process fixture factory for MySQL server.
 
     :param mysqld_exec: path to mysql executable
@@ -66,7 +67,7 @@ def mysql_proc(
 
     @pytest.fixture(scope="session")
     def mysql_proc_fixture(
-        request: FixtureRequest, tmp_path_factory: TempPathFactory
+        request: pytest.FixtureRequest, tmp_path_factory: pytest.TempPathFactory
     ) -> Generator[MySQLExecutor, None, None]:
         """Process fixture for MySQL server.
 

@@ -1,0 +1,1 @@
+Enable the PT Ruff ruleset and update pytest annotations and parametrisation to satisfy it.

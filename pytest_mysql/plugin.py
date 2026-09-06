@@ -17,7 +17,7 @@
 # along with pytest-mysql.  If not, see <http://www.gnu.org/licenses/>.
 """Plugin definition."""
 
-from pytest import Parser
+import pytest
 
 from pytest_mysql import factories
 
@@ -36,7 +36,7 @@ _help_dbname = "Test database name"
 _help_params = "Starting parameters for the MySQL"
 
 
-def pytest_addoption(parser: Parser) -> None:
+def pytest_addoption(parser: pytest.Parser) -> None:
     """Plugin configuration."""
     parser.addini(name="mysql_mysqld", help=_help_mysqld, default="mysqld")
     parser.addoption(

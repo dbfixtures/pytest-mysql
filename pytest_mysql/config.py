@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from pytest import FixtureRequest
+import pytest
 
 
 @dataclass
@@ -24,7 +24,7 @@ class MySQLConfig:
     install_db: str
 
 
-def get_config(request: FixtureRequest) -> MySQLConfig:
+def get_config(request: pytest.FixtureRequest) -> MySQLConfig:
     """Return a pytest-mtsql config options."""
 
     def get_conf_option(option: str) -> Any:
