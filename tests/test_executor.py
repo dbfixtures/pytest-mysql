@@ -4,15 +4,14 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
-from pytest import TempPathFactory
 
 from pytest_mysql.exceptions import MySQLUnsupported
 from pytest_mysql.executor import MySQLExecutor
 
 
 @pytest.mark.parametrize(
-    "verstr, version",
-    (
+    ("verstr", "version"),
+    [
         (b"mysql_install_db Ver 5.7.21, for Linux on x86_64", "5.7.21"),
         (
             (b"mysqld  Ver 5.7.21-0ubuntu0.17.10.1 for Linux on x86_64 ((Ubuntu))"),
@@ -32,9 +31,11 @@ from pytest_mysql.executor import MySQLExecutor
         ),
         ((b"mysqld  Ver 5.7.23 for osx10.13 on x86_64 (Homebrew)"), "5.7.23"),
         ((b"\nmysqld  Ver 5.7.23 for osx10.13 on x86_64 (Homebrew)"), "5.7.23"),
-    ),
+    ],
 )
-def test_version_check(verstr: bytes, version: str, tmp_path_factory: TempPathFactory) -> None:
+def test_version_check(
+    verstr: bytes, version: str, tmp_path_factory: pytest.TempPathFactory
+) -> None:
     """Test executor's version property."""
     executor = MySQLExecutor(
         mysqld_safe=Path(""),
@@ -53,8 +54,8 @@ def test_version_check(verstr: bytes, version: str, tmp_path_factory: TempPathFa
 
 
 @pytest.mark.parametrize(
-    "verstr, implementation",
-    (
+    ("verstr", "implementation"),
+    [
         (b"mysql_install_db Ver 5.7.21, for Linux on x86_64", "mysql"),
         (
             (b"mysqld  Ver 5.7.21-0ubuntu0.17.10.1 for Linux on x86_64 ((Ubuntu))"),
@@ -78,10 +79,10 @@ def test_version_check(verstr: bytes, version: str, tmp_path_factory: TempPathFa
             (b"mysqld  Ver 5.7.23 for osx10.13 on x86_64 (Homebrew)"),
             "mysql",
         ),
-    ),
+    ],
 )
 def test_implementation(
-    verstr: bytes, implementation: str, tmp_path_factory: TempPathFactory
+    verstr: bytes, implementation: str, tmp_path_factory: pytest.TempPathFactory
 ) -> None:
     """Check detecting implementation."""
     executor = MySQLExecutor(
@@ -102,7 +103,7 @@ def test_implementation(
 
 @pytest.mark.parametrize(
     "verstr",
-    (
+    [
         b"mysql_install_db Ver 5.7.1, for Linux on x86_64",
         b"mysqld  Ver 5.7.1-0ubuntu0.17.10.1 for Linux on x86_64 ((Ubuntu))",
         b"mysql 5.5.55",
@@ -110,9 +111,9 @@ def test_implementation(
             b"mysqld  Ver 10.1.30-MariaDB-0ubuntu0.17.10.1 "
             b"for debian-linux-gnu on x86_64 (Ubuntu 17.10)"
         ),
-    ),
+    ],
 )
-def test_exception_raised(verstr: bytes, tmp_path_factory: TempPathFactory) -> None:
+def test_exception_raised(verstr: bytes, tmp_path_factory: pytest.TempPathFactory) -> None:
     """Raise exception on not supported versions."""
     executor = MySQLExecutor(
         mysqld_safe=Path(""),
