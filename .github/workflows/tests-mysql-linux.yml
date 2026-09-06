@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: ankane/setup-mysql@v1 # zizmor: ignore[unpinned-uses]
+      - uses: ankane/setup-mysql@19fbb7ee54446ac7f3aed34db192ec70dbec6092 # v1
         with:
           mysql-version: ${{ inputs.mysql }}
       - name: Check MySQL Version
