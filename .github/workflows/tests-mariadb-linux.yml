@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: ankane/setup-mariadb@v1 # zizmor: ignore[unpinned-uses]
+      - uses: ankane/setup-mariadb@e34d4859081a8192918ea2302b7c9a71475a0d73 # v1
         with:
           mariadb-version: ${{ inputs.mariadb }}
       - name: Check MariaDB Version

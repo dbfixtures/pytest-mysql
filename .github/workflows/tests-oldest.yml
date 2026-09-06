@@ -26,7 +26,7 @@ jobs:
       UV_NO_SYNC: "1"
     services:
       mysql:
-        image: mysql:8.4
+        image: mysql:9.7
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_DATABASE: tests
@@ -38,9 +38,9 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: ankane/setup-mysql@v1 # zizmor: ignore[unpinned-uses]
+      - uses: ankane/setup-mysql@19fbb7ee54446ac7f3aed34db192ec70dbec6092 # v1
         with:
-          mysql-version: "8.4"
+          mysql-version: "9.7"
       - name: Check MySQL Version
         run: mysqld --version
       - name: Set up uv with python ${{ matrix.python-version }}
@@ -91,7 +91,7 @@ jobs:
       PYTHON: ${{ matrix.python-version }}
     services:
       mysql:
-        image: mariadb:10.11
+        image: mariadb:12.3
         env:
           MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
           MARIADB_DATABASE: tests
@@ -103,9 +103,9 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: ankane/setup-mariadb@v1 # zizmor: ignore[unpinned-uses]
+      - uses: ankane/setup-mariadb@e34d4859081a8192918ea2302b7c9a71475a0d73 # v1 #
         with:
-          mariadb-version: "10.11"
+          mariadb-version: "12.3"
       - name: Check MariaDB Version
         run: mysqld --version
       - name: Set up uv with python ${{ matrix.python-version }}
