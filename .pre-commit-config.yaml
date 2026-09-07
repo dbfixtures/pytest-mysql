@@ -50,7 +50,7 @@ repos:
       - id: actionlint
 
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: v2.28.1
+    rev: v2.29.0
     hooks:
       - id: pyproject-fmt
 
