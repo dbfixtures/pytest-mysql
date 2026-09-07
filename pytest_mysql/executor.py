@@ -4,7 +4,7 @@ import platform
 import re
 import subprocess
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any, Literal, Self
 
 from mirakuru import TCPExecutor
 from packaging.version import parse
@@ -141,7 +141,7 @@ class MySQLExecutor(TCPExecutor):
         self._initialised = True
         return True
 
-    def start(self) -> "MySQLExecutor":
+    def start(self) -> Self:
         """Trigger initialization during start."""
         self._check_socket_path()
 
@@ -175,7 +175,7 @@ class MySQLExecutor(TCPExecutor):
             ]
             subprocess.check_output(shutdown_command)
 
-    def stop(self, *args: Any, **kwargs: Any) -> "MySQLExecutor":
+    def stop(self, *args: Any, **kwargs: Any) -> Self:
         """Stop the server."""
         self.shutdown()
         return super().stop(*args, **kwargs)
