@@ -1,0 +1,1 @@
+Modernise annotations for Python 3.11 as the minimum supported version.

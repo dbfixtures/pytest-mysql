@@ -1,0 +1,1 @@
+Enable the UP and PYI ruff rulesets and pin mypy's ``python_version``.

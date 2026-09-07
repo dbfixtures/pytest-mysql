@@ -10,7 +10,7 @@ readme = "README.rst"
 keywords = [ "fixture", "mysql", "pytest", "tests" ]
 license = "LGPL-3.0-or-later"
 license-files = [ "COPYING.lesser" ]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Web Environment",
@@ -21,11 +21,11 @@ classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Software Development :: Testing",
 ]
@@ -67,7 +67,7 @@ module-root = ""
 source-include = [ "CHANGES.rst" ]
 
 [tool.ruff]
-target-version = "py310"
+target-version = "py311"
 line-length = 100
 
 [tool.ruff.lint]
@@ -79,6 +79,8 @@ select = [
     "S602",
     "FBT",  # flake8-boolean-trap
     "PT",   # flake8-pytest-style
+    "UP",   # pyupgrade
+    "PYI",  # flake8-pyi
 ]
 
 [tool.pyproject-fmt]

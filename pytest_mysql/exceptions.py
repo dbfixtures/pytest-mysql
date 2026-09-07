@@ -14,7 +14,7 @@ class VersionNotDetected(PytestMySQLException):
 
     def __init__(self, output: str) -> None:
         """Create error message."""
-        super().__init__("Could not detect version in {}".format(output))
+        super().__init__(f"Could not detect version in {output}")
 
 
 class SocketPathTooLong(PytestMySQLException):

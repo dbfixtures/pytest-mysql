@@ -17,8 +17,8 @@
 # along with pytest-mysql.  If not, see <http://www.gnu.org/licenses/>.
 """Process fixture factory for MySQL database."""
 
+from collections.abc import Callable, Generator, Iterable
 from pathlib import Path
-from typing import Callable, Generator, Iterable
 
 import pytest
 from port_for import PortForException, PortType, get_port

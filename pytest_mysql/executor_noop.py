@@ -32,6 +32,6 @@ class NoopMySQLExecutor:
         """Do nothing enter method."""
         pass
 
-    def __exit__(self, *args: Any, **kwargs: Any) -> None:
+    def __exit__(self, *args: object, **kwargs: Any) -> None:
         """Do nothing exit method."""
         pass
