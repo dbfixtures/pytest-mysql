@@ -1,1 +1,0 @@
-Add MySQL 9.7 to CI

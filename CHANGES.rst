@@ -3,6 +3,43 @@ CHANGELOG
 
 .. towncrier release notes start
 
+pytest-mysql 5.0.0 (2026-09-08)
+===============================
+
+Breaking changes
+----------------
+
+- Drop support for Python 3.10 (`#850 <https://github.com/dbfixtures/pytest-mysql/issues/850>`_)
+
+
+Features
+--------
+
+- Add support for Python 3.15 (`#850 <https://github.com/dbfixtures/pytest-mysql/issues/850>`_)
+
+
+Miscellaneous
+-------------
+
+- Add MySQL 9.7 to CI (`#785 <https://github.com/dbfixtures/pytest-mysql/issues/785>`_)
+- Add MariaDB 11.8 and 12.3 to CI (`#785 <https://github.com/dbfixtures/pytest-mysql/issues/785>`_)
+- Add zizmor to pre-commit and harden GitHub Actions workflow permissions. (`#826 <https://github.com/dbfixtures/pytest-mysql/issues/826>`_)
+- Add pyproject-fmt to pre-commit tools. (`#827 <https://github.com/dbfixtures/pytest-mysql/issues/827>`_)
+- Migrate dev env and build system to uv (`#828 <https://github.com/dbfixtures/pytest-mysql/issues/828>`_)
+- Enable FBT ruff ruleset (`#830 <https://github.com/dbfixtures/pytest-mysql/issues/830>`_)
+- Add release-schedule workflow replacing manual release workflow. (`#836 <https://github.com/dbfixtures/pytest-mysql/issues/836>`_)
+- Enable the PT Ruff ruleset and update pytest annotations and parametrisation to satisfy it. (`#837 <https://github.com/dbfixtures/pytest-mysql/issues/837>`_)
+- Migrated the Automerge workflow to `fizyk/actions-reuse` version 5.6.0. (`#841 <https://github.com/dbfixtures/pytest-mysql/issues/841>`_)
+- Add actionlint to pre-commit (`#842 <https://github.com/dbfixtures/pytest-mysql/issues/842>`_)
+- Configure Dependabot to update pre-commit dependencies. (`#845 <https://github.com/dbfixtures/pytest-mysql/issues/845>`_)
+- Turn off autofix_prs and change pre-commit's autoupdate schedule to quarterly (`#847 <https://github.com/dbfixtures/pytest-mysql/issues/847>`_)
+- Migrate tests to be based on `actions-reuse` new composite action `uv-pytest-coverage` (`#848 <https://github.com/dbfixtures/pytest-mysql/issues/848>`_)
+- Modernise annotations for Python 3.11 as the minimum supported version. (`#850 <https://github.com/dbfixtures/pytest-mysql/issues/850>`_)
+- Pin both `ankane/setup-mysql` and `ankane/setup-mariadb` to a commit hash (`#860 <https://github.com/dbfixtures/pytest-mysql/issues/860>`_)
+- Update pyproject-fmt to 2.29.0 (`#863 <https://github.com/dbfixtures/pytest-mysql/issues/863>`_)
+- Enable the UP and PYI ruff rulesets and pin mypy's ``python_version``. (`#864 <https://github.com/dbfixtures/pytest-mysql/issues/864>`_)
+
+
 pytest-mysql 4.0.0 (2026-04-12)
 ===============================
 

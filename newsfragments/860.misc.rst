@@ -1,1 +1,0 @@
-Pin both `ankane/setup-mysql` and `ankane/setup-mariadb` to a commit hash

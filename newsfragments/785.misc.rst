@@ -1,1 +1,0 @@
-Add MariaDB 11.8 and 12.3 to CI

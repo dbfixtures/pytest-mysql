@@ -17,4 +17,4 @@
 # along with pytest-mysql. If not, see <http://www.gnu.org/licenses/>.
 """Main module for pytest-mysql."""
 
-__version__ = "4.0.0"
+__version__ = "5.0.0"

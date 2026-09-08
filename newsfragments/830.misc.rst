@@ -1,1 +1,0 @@
-Enable FBT ruff ruleset

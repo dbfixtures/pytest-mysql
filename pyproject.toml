@@ -4,7 +4,7 @@ requires = [ "uv-build>=0.12,<0.13" ]
 
 [project]
 name = "pytest-mysql"
-version = "4.0.0"
+version = "5.0.0"
 description = "MySQL process and client fixtures for pytest"
 readme = "README.rst"
 keywords = [ "fixture", "mysql", "pytest", "tests" ]
@@ -38,7 +38,7 @@ email = "fizyk+pypi@fizyk.dev"
 [project.urls]
 Source = "https://github.com/dbfixtures/pytest-mysql"
 "Bug Tracker" = "https://github.com/dbfixtures/pytest-mysql/issues"
-Changelog = "https://github.com/dbfixtures/pytest-mysql/blob/v4.0.0/CHANGES.rst"
+Changelog = "https://github.com/dbfixtures/pytest-mysql/blob/v5.0.0/CHANGES.rst"
 
 [project.entry-points.pytest11]
 pytest_mysql = "pytest_mysql.plugin"
@@ -121,7 +121,7 @@ message_template = "Release {new_version}"
 tag_template = "v{new_version}"
 
 [tool.tbump.version]
-current = "4.0.0"
+current = "5.0.0"
 regex = '''
   (?P<major>\d+)
   \.
