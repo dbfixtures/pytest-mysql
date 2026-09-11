@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any, Literal, Self
 
 from mirakuru import TCPExecutor
+from mirakuru.unixsocket import UnixSocketExecutor
 from packaging.version import parse
 
 from pytest_mysql.exceptions import (
@@ -75,6 +76,10 @@ class MySQLExecutor(TCPExecutor):
             f"--skip-syslog {params}"
         )
         super().__init__(command, host, port, timeout=timeout)
+        self._unixsocketexecutor = UnixSocketExecutor(
+            command, socket_name=self.unixsocket, timeout=timeout
+        )
+        """Never started, only its unix socket check is used by `after_start_check`."""
 
     def version(self) -> str:
         """Read MySQL's version."""
@@ -154,6 +159,15 @@ class MySQLExecutor(TCPExecutor):
         else:
             raise MySQLUnsupported("Only MySQL and MariaDB servers are supported with MariaDB.")
         return super().start()
+
+    def after_start_check(self) -> bool:
+        """Check if the server accepts connections on the port and the unix socket.
+
+        The TCP port starts accepting connections before mysqld creates the
+        unix socket, and the client fixtures connect through the socket, so
+        waiting for the port alone lets them connect too early.
+        """
+        return super().after_start_check() and self._unixsocketexecutor.pre_start_check()
 
     def shutdown(self) -> None:
         """Send shutdown command to the server."""
