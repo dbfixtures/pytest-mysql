@@ -1,0 +1,5 @@
+Wait for mysqld's unix socket to accept connections before considering the server
+started.
+Previously executor only checked the TCP port, which mysqld starts listening on
+before it creates the socket, so client fixtures could connect too early and fail
+with ``(2003, "Can't connect to MySQL server on 'localhost' ([Errno 2] No such file or directory)")``.

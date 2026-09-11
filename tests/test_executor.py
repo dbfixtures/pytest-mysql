@@ -1,5 +1,7 @@
 """Executor tests."""
 
+import socket
+from contextlib import closing
 from pathlib import Path
 from unittest.mock import patch
 
@@ -132,3 +134,41 @@ def test_exception_raised(verstr: bytes, tmp_path_factory: pytest.TempPathFactor
         pytest.raises(MySQLUnsupported),
     ):
         executor.start()
+
+
+@pytest.mark.parametrize(
+    ("tcp_up", "socket_state", "started"),
+    [
+        (True, "listening", True),
+        (True, "stale", False),
+        (True, "missing", False),
+        (False, "listening", False),
+    ],
+)
+def test_after_start_check_waits_for_socket(
+    tcp_up: bool,  # noqa: FBT001
+    socket_state: str,
+    started: bool,  # noqa: FBT001
+    tmp_path_factory: pytest.TempPathFactory,
+) -> None:
+    """The server counts as started only once its unix socket accepts connections."""
+    executor = MySQLExecutor(
+        mysqld_safe=Path(""),
+        mysqld=Path(""),
+        admin_exec="",
+        logfile_path="",
+        params="",
+        base_directory=tmp_path_factory.mktemp("pytest-mysql"),
+        user="",
+        host="",
+        port=8838,
+    )
+    with closing(socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)) as listener:
+        if socket_state == "listening":
+            listener.bind(executor.unixsocket)
+            listener.listen(1)
+        elif socket_state == "stale":
+            Path(executor.unixsocket).touch()
+
+        with patch("mirakuru.TCPExecutor.after_start_check", lambda _self: tcp_up):
+            assert executor.after_start_check() is started
