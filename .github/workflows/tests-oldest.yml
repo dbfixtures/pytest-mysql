@@ -44,7 +44,7 @@ jobs:
       - name: Check MySQL Version
         run: mysqld --version
       - name: Set up uv with python ${{ matrix.python-version }}
-        uses: fizyk/actions-reuse/.github/actions/uv-setup@2ab3c94b032a11fca1238ef134690e589616739d # v5.7.0
+        uses: fizyk/actions-reuse/.github/actions/uv-setup@ef34949dba56816730c78752529724b4aa96e557 # v5.8.0
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install oldest supported versions
@@ -52,20 +52,20 @@ jobs:
         with:
           requirements: oldest/requirements.txt
       - name: Run test
-        uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@2ab3c94b032a11fca1238ef134690e589616739d # v5.7.0
+        uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@ef34949dba56816730c78752529724b4aa96e557 # v5.8.0
         with:
           pytest-opts: -c pyproject.oldest.toml -p no:xdist --mysql-user=$USER -k "not mysqlnoproc"
           data-file: .coverage.serial
           output-file: coverage-serial.xml
       - name: Run xdist test
-        uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@2ab3c94b032a11fca1238ef134690e589616739d # v5.7.0
+        uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@ef34949dba56816730c78752529724b4aa96e557 # v5.8.0
         with:
           pytest-opts: -c pyproject.oldest.toml --max-worker-restart=0 -n auto --mysql-user=$USER -k "not mysqlnoproc"
           coverage-config: .coveragerc
           data-file: .coverage.xdist
           output-file: coverage-xdist.xml
       - name: Run noproc test
-        uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@2ab3c94b032a11fca1238ef134690e589616739d # v5.7.0
+        uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@ef34949dba56816730c78752529724b4aa96e557 # v5.8.0
         with:
           pytest-opts: -c pyproject.oldest.toml -p no:xdist -k mysqlnoproc --mysql-host="127.0.0.1" --mysql-port=3333
           coverage-config: .coveragerc
@@ -110,7 +110,7 @@ jobs:
       - name: Check MariaDB Version
         run: mysqld --version
       - name: Set up uv with python ${{ matrix.python-version }}
-        uses: fizyk/actions-reuse/.github/actions/uv-setup@2ab3c94b032a11fca1238ef134690e589616739d # v5.7.0
+        uses: fizyk/actions-reuse/.github/actions/uv-setup@ef34949dba56816730c78752529724b4aa96e557 # v5.8.0
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install oldest supported versions
@@ -118,20 +118,20 @@ jobs:
         with:
           requirements: oldest/requirements.txt
       - name: Run test
-        uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@2ab3c94b032a11fca1238ef134690e589616739d # v5.7.0
+        uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@ef34949dba56816730c78752529724b4aa96e557 # v5.8.0
         with:
           pytest-opts: -c pyproject.oldest.toml -p no:xdist --mysql-user=$USER -k "not mysqlnoproc"
           data-file: .coverage.serial
           output-file: coverage-serial.xml
       - name: Run xdist test
-        uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@2ab3c94b032a11fca1238ef134690e589616739d # v5.7.0
+        uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@ef34949dba56816730c78752529724b4aa96e557 # v5.8.0
         with:
           pytest-opts: -c pyproject.oldest.toml --max-worker-restart=0 -n auto --mysql-user=$USER -k "not mysqlnoproc"
           coverage-config: .coveragerc
           data-file: .coverage.xdist
           output-file: coverage-xdist.xml
       - name: Run noproc test
-        uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@2ab3c94b032a11fca1238ef134690e589616739d # v5.7.0
+        uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@ef34949dba56816730c78752529724b4aa96e557 # v5.8.0
         with:
           pytest-opts: -c pyproject.oldest.toml -p no:xdist -k mysqlnoproc --mysql-host="127.0.0.1" --mysql-port=3333
           coverage-config: .coveragerc
