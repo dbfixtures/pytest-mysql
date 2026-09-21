@@ -33,13 +33,13 @@ jobs:
     - name: Check MySQL Version
       run: mysqld --version
     - name: Set up uv with python ${{ matrix.python-version }}
-      uses: fizyk/actions-reuse/.github/actions/uv-setup@2ab3c94b032a11fca1238ef134690e589616739d # v5.7.0
+      uses: fizyk/actions-reuse/.github/actions/uv-setup@ef34949dba56816730c78752529724b4aa96e557 # v5.8.0
       with:
         python-version: ${{ matrix.python-version }}
     - name: Check MySQL Version
       run: mysqld --version
     - name: Run test
-      uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@2ab3c94b032a11fca1238ef134690e589616739d # v5.7.0
+      uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@ef34949dba56816730c78752529724b4aa96e557 # v5.8.0
       with:
         pytest-opts: -p no:xdist -k "not mysqlnoproc" --mysql-user=root --basetemp=/tmp/pytest_mysql
         data-file: .coverage.serial
@@ -73,11 +73,11 @@ jobs:
     - name: Check MySQL Version
       run: mysqld --version
     - name: Set up uv with python ${{ matrix.python-version }}
-      uses: fizyk/actions-reuse/.github/actions/uv-setup@2ab3c94b032a11fca1238ef134690e589616739d # v5.7.0
+      uses: fizyk/actions-reuse/.github/actions/uv-setup@ef34949dba56816730c78752529724b4aa96e557 # v5.8.0
       with:
         python-version: ${{ matrix.python-version }}
     - name: Run test
-      uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@2ab3c94b032a11fca1238ef134690e589616739d # v5.7.0
+      uses: fizyk/actions-reuse/.github/actions/uv-pytest-coverage@ef34949dba56816730c78752529724b4aa96e557 # v5.8.0
       with:
         pytest-opts: --mysql-user=$USER -p no:xdist -k "not mysqlnoproc" --basetemp=/tmp/pytest_mysql
         data-file: .coverage.serial
