@@ -45,7 +45,7 @@ repos:
         args: [--no-progress, --fix]
 
   - repo: https://github.com/kjanat/actionlint
-    rev: v1.16.0
+    rev: v1.17.0
     hooks:
       - id: actionlint
 
