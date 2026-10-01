@@ -681,7 +681,7 @@ dev = [
     { name = "pytest", specifier = "==9.1.1" },
     { name = "pytest-xdist", specifier = "==3.8.0" },
     { name = "towncrier", specifier = "==26.9.0" },
-    { name = "types-pymysql", specifier = "==1.2.0.20260807" },
+    { name = "types-pymysql", specifier = "==1.2.0.20260923" },
 ]
 release = [{ name = "tbump", specifier = "==6.11.0" }]
 
@@ -755,11 +755,11 @@ wheels = [
 
 [[package]]
 name = "types-pymysql"
-version = "1.2.0.20260807"
+version = "1.2.0.20260923"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/cf/71/f2d9cf554a59396c9dcf7cd902d1c187b6d4762dc7650e25a02c4ca2cf9c/types_pymysql-1.2.0.20260807.tar.gz", hash = "sha256:7fd4a7767925dbb0fd3e73fd488184fcd98b7612f8066cda280453b17864264f", size = 22768, upload-time = "2026-08-07T04:17:29.272Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/58/cb/2c4017b0da85cbed15296b0569141f2c56790752aa4facc60ea199db24df/types_pymysql-1.2.0.20260923.tar.gz", hash = "sha256:2d02420956deeed7366c3b2b7dfaac3b33ad800d754327857f7b38f59751a59c", size = 22943, upload-time = "2026-09-23T06:52:06.076Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/79/83/37e485e7ad3404aa018b6740d759b74665669c61c9c154f81d890b2ccd3a/types_pymysql-1.2.0.20260807-py3-none-any.whl", hash = "sha256:2a722284451649e1c2564655cba4963c0661851d04cc10195b7c002fab8e55f6", size = 23327, upload-time = "2026-08-07T04:17:28.318Z" },
+    { url = "https://files.pythonhosted.org/packages/af/f3/75928f071b26151423e7a681defd6eee6fa8181de70cb22ea2211c295d39/types_pymysql-1.2.0.20260923-py3-none-any.whl", hash = "sha256:2042fc2d0745eba181c3070221fdc9ac12baaa4908f79c1cb0f953c8c44efcc5", size = 23383, upload-time = "2026-09-23T06:52:04.912Z" },
 ]
 
 [[package]]

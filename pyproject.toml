@@ -55,7 +55,7 @@ dev = [
     "pytest==9.1.1",
     "pytest-xdist==3.8.0",
     "towncrier==26.9.0",
-    "types-pymysql==1.2.0.20260807",
+    "types-pymysql==1.2.0.20260923",
 ]
 release = [
     "tbump==6.11.0",
