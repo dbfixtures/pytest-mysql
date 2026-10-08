@@ -1,1 +1,0 @@
-Autofix workflows with zizmor 1.30

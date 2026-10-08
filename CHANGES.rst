@@ -3,6 +3,26 @@ CHANGELOG
 
 .. towncrier release notes start
 
+pytest-mysql 5.0.1 (2026-10-08)
+===============================
+
+Bugfixes
+--------
+
+- Wait for mysqld's unix socket to accept connections before considering the server
+  started.
+  Previously executor only checked the TCP port, which mysqld starts listening on
+  before it creates the socket, so client fixtures could connect too early and fail
+  with ``(2003, "Can't connect to MySQL server on 'localhost' ([Errno 2] No such file or directory)")``. (`#871 <https://github.com/dbfixtures/pytest-mysql/issues/871>`_)
+
+
+Miscellaneous
+-------------
+
+- Autofix workflows with zizmor 1.30 (`#868 <https://github.com/dbfixtures/pytest-mysql/issues/868>`_)
+- Adjust shared-automerge permissions (`#884 <https://github.com/dbfixtures/pytest-mysql/issues/884>`_)
+
+
 pytest-mysql 5.0.0 (2026-09-08)
 ===============================
 
