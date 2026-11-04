@@ -52,7 +52,7 @@ dev = [
     "packaging==26.3",
     "port-for==1.1.1",
     "pymysql==1.2.3",
-    "pytest==9.1.1",
+    "pytest==9.2.0",
     "pytest-xdist==3.8.0",
     "towncrier==26.9.0",
     "types-pymysql==1.2.0.20260923",
