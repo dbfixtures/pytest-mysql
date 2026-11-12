@@ -12,6 +12,11 @@ on:
         description: 'MySQL version'
         required: true
         type: string
+      runs-on:
+        description: 'Runner image'
+        default: 'ubuntu-latest'
+        required: false
+        type: string
     secrets:
       codecov_token:
         description: 'Codecov token'
@@ -19,13 +24,13 @@ on:
 
 jobs:
   mysql:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs-on }}
     strategy:
       fail-fast: false
       matrix:
         python-version: ${{ fromJSON(inputs.python-versions) }}
     env:
-      OS: ubuntu-latest
+      OS: ${{ inputs.runs-on }}
       PYTHON: ${{ matrix.python-version }}
     services:
       mysql:

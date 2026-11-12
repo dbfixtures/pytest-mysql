@@ -31,6 +31,8 @@ jobs:
     uses: $/.github/workflows/tests-mysql-linux.yml
     with:
       mysql: "8.0"
+      # Ubuntu 26.04 has no MySQL 8.0 packages, so the runner installs 8.4 instead.
+      runs-on: ubuntu-24.04
       python-versions: '["3.13", "3.14", "3.15"]'
     secrets:
       codecov_token: ${{ secrets.CODECOV_TOKEN }}
@@ -58,6 +60,8 @@ jobs:
     uses: $/.github/workflows/tests-mariadb-linux.yml
     with:
       mariadb: "11.4"
+      # MariaDB publishes no Ubuntu 26.04 packages for this version.
+      runs-on: ubuntu-24.04
       python-versions: '["3.13", "3.14", "3.15"]'
     secrets:
       codecov_token: ${{ secrets.CODECOV_TOKEN }}
@@ -67,6 +71,8 @@ jobs:
     uses: $/.github/workflows/tests-mariadb-linux.yml
     with:
       mariadb: 10.11
+      # MariaDB publishes no Ubuntu 26.04 packages for this version.
+      runs-on: ubuntu-24.04
       python-versions: '["3.14", "3.15"]'
     secrets:
       codecov_token: ${{ secrets.CODECOV_TOKEN }}
